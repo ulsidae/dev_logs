@@ -18,4 +18,7 @@ Reference:
 
 > [!WARNING]
 > Make sure to **Keep your setup key secure.**
-> * This value is the **shared secret** used by TOTP authenticators. 
+> * This value is the **shared secret** used by TOTP authenticators.
+
+*Image source: [GitHub 2FA Documentation](https://docs.github.com/en/authentication/securing-your-account-with-two-factor-authentication-2fa/configuring-two-factor-authentication)*
+
