@@ -3,7 +3,7 @@
 
 A minimal, reference-style implementation of TOTP (RFC 6238).
 <br>
-🍯 [Code]()
+🍯 [Code](https://github.com/ulsidae/dev_logs/blob/main/Security%20%26%20Crypto/totp/totp.py)
 
 ---
 
