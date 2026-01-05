@@ -12,6 +12,6 @@ Code is free to use under the Apache 2.0 License;<br>
 
 # 0.Security & Crypto
 
-0.
+0.🍯 [TOTP](https://github.com/ulsidae/dev_logs/tree/main/Security%20&%20Crypto/totp)
 
 ---
