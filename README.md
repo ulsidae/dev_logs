@@ -1,8 +1,8 @@
 # 🍯 ulsidae's Dev Logs
 
-> **License:** Apache-2.0 (Code Only)
+> **License:** License: Apache-2.0 (Codebase only)
 
-> **Notice:**  All text/README content is proprietary. No redistribution allowed.
+> **Notice:** All written documentation, including this README, is proprietary. Unauthorized redistribution is strictly prohibited.
 ---
 
 ## 📑 Index
