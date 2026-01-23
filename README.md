@@ -15,7 +15,7 @@
 
 ---
 
-## 🔐 0. Security & Crypto
+<h2 id="0-security-crypto">🔐 0. Security & Crypto</h2>
 
 > Cryptography for late-night reading. ☕️🌙
 
@@ -27,14 +27,14 @@
 
 ---
 
-## ⚡️ 1. Artificial Intelligence
+<h2 id="1-artificial-intelligence">⚡️ 1. Artificial Intelligence</h2>
 > Pushing neural networks until CUDA and bottlenecks are mastered.
 
 ⚡️ See CLI for Robi 🔗 [C++]()
 
 ---
 
-## 🎮 2. Game Modding
+<h2 id="2-game-modding">🎮 2. Game Modding</h2>
 > Modifying the core, enhancing the experience. (in a twisted way.)
 
 ```bash
@@ -44,7 +44,7 @@ Darkest Dungeon
 
 ---
 
-## 📐 3. Mathematics
+<h2 id="3-mathematics">📐 3. Mathematics</h2>
 > Classic. Isn't it?
 
 🔢 See Strassen Algorithm 🔗 [C++]()
