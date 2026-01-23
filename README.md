@@ -1,17 +1,52 @@
----
-# 🍯ulsidae's dev logs
+# 🍯 ulsidae's Dev Logs
 
-Code is free to use under the Apache 2.0 License;<br>
-<strong>All written content (e.g. README.md) is for viewing only — do not copy or redistribute.</strong> 
+> **License:** Apache-2.0 (Code Only)
 
----
-
-<br>
-
+> **Notice:**  All text/README content is proprietary. No redistribution allowed.
 ---
 
-# 0.Security & Crypto
+## 📑 Index
+| Section | Description | Status |
+| :--- | :--- | :--- |
+| [0. Security & Crypto](#0-security-crypto) | algorithm etc. | `RESEARCHING` |
+| [1. Artificial Intelligence](#1-artificial-intelligence) | TTS, CLI, etc. | `OPTIMIZING` |
+| [2. Game Modding](#2-game-modding) | Darkest Dungeon, Terraria, etc. | `ACTIVE` |
+| [3. Mathematics](#3-mathematics) | It's everyone's favorite subject! | `THINKING` |
 
-0.🍯 [TOTP](https://github.com/ulsidae/dev_logs/tree/main/Security%20&%20Crypto/totp)
+---
+
+## 🔐 0. Security & Crypto
+
+> Cryptography for late-night reading. ☕️🌙
+
+```bash
+# 🔐 = experiments
+# 🔒 = explanations / theory
+```
+🔒 See TOTP (Time-based One-Time Password) 🔗 [Python](https://github.com/ulsidae/dev_logs/tree/main/Security%20&%20Crypto/totp)
+
+---
+
+## ⚡️ 1. Artificial Intelligence
+> Pushing neural networks until CUDA and bottlenecks are mastered.
+
+⚡️ See CLI for Robi 🔗 [C++]()
+
+---
+
+## 🎮 2. Game Modding
+> Modifying the core, enhancing the experience. (in a twisted way.)
+
+```bash
+Darkest Dungeon
+```
+🎮 See Happiest Dungeon (System break experiment) 🔗 [JSON & configs]()
+
+---
+
+## 📐 3. Mathematics
+> Classic. Isn't it?
+
+🔢 See Strassen Algorithm 🔗 [C++]()
 
 ---
