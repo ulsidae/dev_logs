@@ -40,7 +40,7 @@
 ```bash
 Darkest Dungeon
 ```
-🎮 See Happiest Dungeon (System break experiment) 🔗 [JSON & configs]()
+🎮 See Happiest Dungeon (System break experiment) 🔗 [JSON & configs](https://github.com/ulsidae/dev_logs/tree/main/game%20modding/Darkest%20Dungeon/HD)
 
 ---
 
