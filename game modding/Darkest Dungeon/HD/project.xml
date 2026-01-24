@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+	<PreviewIconFile>preview_icon.png</PreviewIconFile>
+	<ItemDescriptionShort/>
+	<Title>Happiest dungeon</Title>
+             <Author>ulsidae</Author>             
+	<Language>english</Language>
+	<UpdateDetails/>
+	<VersionMajor>1</VersionMajor>
+	<VersionMinor>0</VersionMinor>
+	<TargetBuild>0</TargetBuild>
+	<Tags>
+		<Tags>change rule</Tags>
+	</Tags>
+	<ItemDescription/>
+            <priority>999</priority>
+</project>
+
