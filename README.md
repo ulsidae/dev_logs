@@ -47,6 +47,6 @@ Darkest Dungeon
 <h2 id="3-mathematics">📐 3. Mathematics</h2>
 > Classic. Isn't it?
 
-🔢 See Strassen Algorithm 🔗 [C++]()
+🔢 
 
 ---
