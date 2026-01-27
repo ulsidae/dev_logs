@@ -30,7 +30,7 @@
 <h2 id="1-artificial-intelligence">⚡️ 1. Artificial Intelligence</h2>
 > Pushing neural networks until CUDA and bottlenecks are mastered.
 
-⚡️ See CLI for Robi 🔗 [C++]()
+⚡️ See CLI for Robi 🔗 [C++](https://github.com/ulsidae/dev_logs/tree/main/AI/CLI%20for%20robi)
 
 ---
 
