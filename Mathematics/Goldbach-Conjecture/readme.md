@@ -97,4 +97,6 @@ It can now handle much larger ranges automatically.
 Even if we divide finite ranges in countless ways, we cannot prove the infinite.
 Thus, this code has practical meaning only for supercomputers and remains highly inefficient.
 
+While largely theoretical, this approach was a great exercise in applying Python and practicing algorithmic thinking.
+
 Still, I’m sharing it here for anyone interested in this thought experiment.
