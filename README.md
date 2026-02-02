@@ -49,4 +49,6 @@ Darkest Dungeon
 
 🔢 See Strassen Algorithm 🔗 [C++](https://github.com/ulsidae/dev_logs/tree/main/Mathematics/Strassen%20Algorithm)
 
+🔢 See Goldbach's conjecture 🔗 [Python](https://github.com/ulsidae/dev_logs/tree/main/Mathematics/Goldbach-Conjecture)
+
 ---
