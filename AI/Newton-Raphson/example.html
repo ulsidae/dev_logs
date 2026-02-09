@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Hello I am an example. :D</title>
+<style>
+body {
+  font-family: 'Arial', sans-serif;
+  background: #f0f2f5;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+#chat-container {
+  width: 400px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+#chat-window {
+  height: 500px;
+  overflow-y: auto;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.msg {
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 80%;
+  font-size: 14px;
+}
+.user {
+  align-self: flex-end;
+  background: #007bff;
+  color: white;
+}
+.bot {
+  align-self: flex-start;
+  background: #e9ecef;
+  color: #333;
+}
+.input-area {
+  display: flex;
+  border-top: 1px solid #ddd;
+}
+input {
+  flex: 1;
+  border: none;
+  padding: 15px;
+  outline: none;
+}
+button {
+  width: 80px;
+  background: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+<div id="chat-container">
+  <div id="chat-window">
+    <div class="msg bot">Hello! Ask me about the weather or temperature!</div>
+  </div>
+  <div class="input-area">
+    <input type="text" id="user-input" placeholder="Type a keyword..." onkeypress="if(event.keyCode==13)sendMessage()">
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</div>
+<script>
+const weatherData = {weather:"Sunny", temp:"18°C", humidity:"40%"};
+
+function calculateNewton(input){
+  const keys = ["weather","temperature","humidity","temp"];
+  let x = keys.filter(k => input.toLowerCase().includes(k)).length;
+  return x >= 1;
+}
+
+function sendMessage(){
+  const i = document.getElementById('user-input');
+  const t = i.value;
+  if(!t) return;
+  addMsg(t,'user');
+  i.value = '';
+  setTimeout(()=>{
+    const res = calculateNewton(t) ?
+      `Today's weather is ${weatherData.weather}, temperature is ${weatherData.temp}, and humidity is ${weatherData.humidity}.` :
+      "Newton-Raphson couldn't find a solution. (Missing weather/temperature keywords)";
+    addMsg(res,'bot');
+  }, 400);
+}
+
+function addMsg(t,s){
+  const w = document.getElementById('chat-window');
+  const d = document.createElement('div');
+  d.classList.add('msg',s);
+  d.innerText = t;
+  w.appendChild(d);
+  w.scrollTop = w.scrollHeight;
+}
+</script>
+</body>
+</html>
