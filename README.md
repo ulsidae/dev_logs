@@ -32,7 +32,7 @@
 
 ⚡️ See CLI for Robi 🔗 [C++](https://github.com/ulsidae/dev_logs/tree/main/AI/CLI%20for%20robi)
 
-⚡️ See An idea from Newton-Raphson 🔗 [JS and HTML](https://github.com/ulsidae/dev_logs/tree/main/AI/Newton-Raphson)
+⚡️ See An idea from Newton-Raphson 🔗 [JS & HTML](https://github.com/ulsidae/dev_logs/tree/main/AI/Newton-Raphson)
 
 ---
 
