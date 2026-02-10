@@ -34,6 +34,8 @@
 
 ⚡️ See An idea from Newton-Raphson 🔗 [JS & HTML](https://github.com/ulsidae/dev_logs/tree/main/AI/Newton-Raphson)
 
+⚡️ See My own voice TTS 🔗 [Python](https://github.com/ulsidae/dev_logs/tree/main/AI/My%20own%20voice%20TTS)
+
 ---
 
 <h2 id="2-game-modding">🎮 2. Game Modding</h2>
