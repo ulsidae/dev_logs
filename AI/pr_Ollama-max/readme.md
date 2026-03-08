@@ -39,6 +39,8 @@ Recommended starter models:
 ### 3. Create a Modelfile
 
 Create a **Modelfile** based on the model you selected.
+(Name it as **Modelfile** . Not Modelfile.txt)
+
 
 A Modelfile allows you to define behavior, prompts, and configuration for your custom model.
 Below is an example:
