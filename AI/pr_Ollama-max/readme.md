@@ -28,7 +28,7 @@ Recommended starter models:
 | Name | Description |
 | :--- | :--- |
 | [Gemma 3](https://ollama.com/library/gemma3) | Try 12B model! If you're using an RTX 3060 or higher |
-| [Hermes 3](https://ollama.com/library/hermes3) | The most "unfilterd" one(=great for experimenting). |
+| [Hermes 3](https://ollama.com/library/hermes3) | The most "unfiltered" model — great for experimentation |
 | [Mistral](https://ollama.com/library/mistral) | Great for a conversation partner |
 | [Exaone 3.5:2.4b](https://ollama.com/library/exaone3.5:2.4b) | If you have a potato & want speak French, Spanish, etc. |
 
@@ -39,7 +39,7 @@ Recommended starter models:
 ### 3. Create a Modelfile
 
 Create a **Modelfile** based on the model you selected.
-(Name it as **Modelfile** . Not Modelfile.txt)
+Make sure the file is named **Modelfile** (not Modelfile.txt).
 
 
 A Modelfile allows you to define behavior, prompts, and configuration for your custom model.
@@ -54,7 +54,7 @@ PARAMETER repeat_penalty 1.1
 PARAMETER num_ctx 2048
 
 SYSTEM """
-You are name is...
+You are an AI assistant designed for ...
 (blabla)
 """
 ```
@@ -65,8 +65,7 @@ You can extend this file with additional parameters, system prompts, or other co
 
 ### Project Goal
 
-This repository serves as a small experiment demonstrating how custom models can be created quickly using Ollama’s Modelfile system.
-The intention is to keep the workflow simple, transparent, and easy to reproduce.
+This repository demonstrates how to quickly build custom models using Ollama’s Modelfile system.
 
 No fine-tuning.
 No heavy infrastructure.
