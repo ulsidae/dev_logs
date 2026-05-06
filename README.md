@@ -1,5 +1,10 @@
 # 🍯 ulsidae's Dev Logs
 
+```
+I build systems by breaking them, understanding them,
+and optimizing them under real constraints.
+```
+
 > **License:** License: Apache-2.0 (Codebase only)
 
 > **Notice:** All written documentation, including this README, is proprietary. Unauthorized redistribution is strictly prohibited.
@@ -8,53 +13,62 @@
 ## 📑 Index
 | Section | Description | Status |
 | :--- | :--- | :--- |
-| [0. Security & Crypto](#0-security-crypto) | algorithm etc. | `RESEARCHING` |
-| [1. Artificial Intelligence](#1-artificial-intelligence) | TTS, CLI, etc. | `OPTIMIZING` |
-| [2. Game Modding](#2-game-modding) | Darkest Dungeon, Terraria, etc. | `ACTIVE` |
-| [3. Mathematics](#3-mathematics) | It's everyone's favorite subject! | `THINKING` |
+| [0. Security & Crypto](#0-security-crypto) | authentication & cryptographic logic | `RESEARCHING` |
+| [1. Artificial Intelligence](#1-artificial-intelligence) | AI systems & optimization | `OPTIMIZING` |
+| [2. Game Modding](#2-game-modding) | system analysis & mechanics manipulation | `ACTIVE` |
+| [3. Mathematics](#3-mathematics) | computational logic & algorithms | `THINKING` |
 
 ---
 
 <h2 id="0-security-crypto">🔐 0. Security & Crypto</h2>
 
-> Cryptography for late-night reading. ☕️🌙
+> Understanding security systems through implementation and analysis.
 
 ```bash
 # 🔐 = experiments
 # 🔒 = explanations / theory
 ```
 🔒 See TOTP (Time-based One-Time Password) 🔗 [Python](https://github.com/ulsidae/dev_logs/tree/main/Security%20&%20Crypto/totp)
-
+- Implements time-based authentication using synchronized tokens (TOTP)
+- Focus: correctness and reproducibility
+  
 ---
 
 <h2 id="1-artificial-intelligence">⚡️ 1. Artificial Intelligence</h2>
-> Pushing neural networks until CUDA and bottlenecks are mastered.
+> Building and optimizing AI systems under performance constraints.
 
 ⚡️ See CLI for Robi 🔗 [C++](https://github.com/ulsidae/dev_logs/tree/main/AI/CLI%20for%20robi)
-
+- Lightweight interface for AI interaction  
+- Focus: low-latency response
+  
 ⚡️ See An idea from Newton-Raphson 🔗 [JS & HTML](https://github.com/ulsidae/dev_logs/tree/main/AI/Newton-Raphson)
+- Applies numerical methods to improve convergence efficiency
 
 ⚡️ See My own voice TTS 🔗 [Python](https://github.com/ulsidae/dev_logs/tree/main/AI/My%20own%20voice%20TTS)
+- Structured pipeline for voice synthesis
 
 ⚡️ See Simple Modelfile setting for Ollama 🔗 [Modelfile](https://github.com/ulsidae/dev_logs/tree/main/AI/pr_Ollama-max)
+- Optimizes model performance under hardware constraints  
 
 ---
 
 <h2 id="2-game-modding">🎮 2. Game Modding</h2>
-> Modifying the core, enhancing the experience. (in a twisted way.)
+> Analyzing systems by breaking and rebuilding them.
 
 ```bash
 Darkest Dungeon
 ```
 🎮 See Happiest Dungeon (System break experiment) 🔗 [JSON & configs](https://github.com/ulsidae/dev_logs/tree/main/game%20modding/Darkest%20Dungeon/HD)
-
+- Modifies core mechanics to test system limits  
 ---
 
 <h2 id="3-mathematics">📐 3. Mathematics</h2>
-> Classic. Isn't it?
+> The foundation behind optimized systems.
 
 🔢 See Strassen Algorithm 🔗 [C++](https://github.com/ulsidae/dev_logs/tree/main/Mathematics/Strassen%20Algorithm)
+- Reduces time complexity via divide-and-conquer  
 
 🔢 See Goldbach's conjecture 🔗 [Python](https://github.com/ulsidae/dev_logs/tree/main/Mathematics/Goldbach-Conjecture)
+- Explores brute-force verification efficiency  
 
 ---
