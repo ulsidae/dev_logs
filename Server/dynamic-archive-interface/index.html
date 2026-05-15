@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0a0a;
+            --gold: #c9a84c;
+            --text-main: #ffffff;
+            --text-dim: #777;
+            --transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        body { background-color: var(--bg-dark); color: var(--text-main); font-family: 'Pretendard', sans-serif; margin: 0; padding: 40px 20px; overflow-x: hidden; }
+        header { text-align: center; margin-bottom: 40px; }
+        header h2 { font-size: 2.5rem; letter-spacing: 5px; color: var(--gold); margin: 0; font-weight: 800; }
+
+        .controls { display: flex; justify-content: center; gap: 10px; margin-bottom: 40px; }
+        .sort-btn {
+            background: transparent; color: var(--text-dim); border: 1px solid #222;
+            padding: 8px 20px; cursor: pointer; font-size: 0.8rem; letter-spacing: 1px;
+            transition: 0.3s; text-transform: uppercase;
+        }
+        .sort-btn:hover, .sort-btn.active { border-color: var(--gold); color: var(--gold); }
+
+        .portfolio-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-auto-rows: 160px; grid-auto-flow: dense; gap: 20px;
+            max-width: 1400px; margin: 0 auto;
+        }
+
+        .portfolio-item {
+            position: relative; background: #111; overflow: hidden; cursor: pointer;
+            border: 1px solid #222; transition: var(--transition);
+        }
+        .item-normal { grid-row: span 1; }
+        .item-small { grid-row: span 1; }
+        .item-medium { grid-row: span 2; }
+        .item-large { grid-row: span 3; }
+        .item-wide { grid-column: span 2; grid-row: span 2; }
+
+        .portfolio-item:hover { border-color: var(--gold); z-index: 10; transform: translateY(-8px); }
+
+        .thumb-bg {
+            position: absolute; inset: 0;
+            background-size: cover; background-position: center;
+            transition: var(--transition); filter: grayscale(100%) brightness(0.4);
+        }
+        .portfolio-item:hover .thumb-bg { filter: grayscale(0%) brightness(0.6); transform: scale(1.1); }
+
+        .card-inner {
+            position: relative; width: 100%; height: 100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.8));
+            padding: 20px; box-sizing: border-box;
+        }
+
+        .card-title { font-weight: 700; letter-spacing: 1px; font-size: 1.1rem; text-align: center; }
+        .card-date { position: absolute; bottom: 15px; left: 15px; font-size: 0.7rem; color: var(--gold); }
+
+        .modal {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98);
+            z-index: 10000; flex-direction: column; justify-content: center; align-items: center;
+        }
+        .modal-content { position: relative; width: 90%; max-width: 1100px; text-align: center; }
+        .modal img { max-width: 100%; max-height: 80vh; object-fit: contain; border: 1px solid #333; }
+
+        .modal-nav {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: none; border: none; color: white; font-size: 2.5rem;
+            cursor: pointer; opacity: 0.5; transition: 0.3s;
+        }
+        .modal-nav:hover { opacity: 1; color: var(--gold); }
+        .prev-btn { left: -80px; } .next-btn { right: -80px; }
+        .close-btn { position: absolute; top: -50px; right: 0; color: #fff; font-size: 2rem; cursor: pointer; }
+        .page-indicator { margin-top: 20px; color: var(--gold); letter-spacing: 2px; font-size: 0.8rem; }
+
+        @media (max-width: 768px) {
+            .portfolio-grid { grid-template-columns: 1fr; grid-auto-rows: 200px; }
+            .item-wide { grid-column: span 1; }
+            .prev-btn { left: 10px; } .next-btn { right: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h2>PORTFOLIO</h2>
+    </header>
+
+    <div class="controls">
+        <button class="sort-btn" onclick="sortAndRender('oldest', this)">Oldest</button>
+        <button class="sort-btn" onclick="sortAndRender('newest', this)">Newest</button>
+        <button class="sort-btn active" onclick="sortAndRender('upload', this)">Entry order</button>
+    </div>
+
+    <div class="portfolio-grid" id="grid"></div>
+
+    <div class="modal" id="imageModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()"><i class="fas fa-times"></i></span>
+            <button class="modal-nav prev-btn" onclick="moveImg(-1)"><i class="fas fa-chevron-left"></i></button>
+            <img id="modalImg" src="">
+            <button class="modal-nav next-btn" onclick="moveImg(1)"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <div class="page-indicator" id="pageInfo"></div>
+    </div>
+
+    <script>
+       const projects = [
+        { folder: "000000", title: "test", size: "large", count: 1, category: "brand" },
+        { folder: "210212", title: "b", size: "large", count: 1, category: "promotion" },
+        { folder: "123145", title: "a", size: "medium", count: 2, category: "ad" },
+        { folder: "260514", title: "c", size: "normal", count: 1, category: "brand" },
+        { folder: "213403", title: "d", size: "wide", count: 1, category: "brand" }
+    ];
+
+        let curFolder = "", curIdx = 1, curTotal = 1, curTitle = "";
+        const supportedExts = ['jpg', 'png', 'gif','jpeg'];
+
+        function parseDate(f) {
+            let y = parseInt(f.substring(0, 2));
+            y = y < 50 ? 2000 + y : 1900 + y;
+            let m = parseInt(f.substring(2, 4)) - 1;
+            let d = parseInt(f.substring(4, 6));
+            return new Date(y, m, d);
+        }
+
+        function tryLoadImage(folder, filename, exts, index, callback, fallback) {
+            if (index >= exts.length) {
+                if (fallback) fallback();
+                return;
+            }
+            const ext = exts[index];
+            const testSrc = `images/${folder}/${filename}.${ext}`;
+            const testImg = new Image();
+            testImg.onload = () => callback(testSrc);
+            testImg.onerror = () => tryLoadImage(folder, filename, exts, index + 1, callback, fallback);
+            testImg.src = testSrc;
+        }
+
+        function sortAndRender(type, btn) {
+            if (btn) {
+                document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            }
+
+            let sorted = [...projects];
+            if (type === 'oldest') sorted.sort((a, b) => parseDate(a.folder) - parseDate(b.folder));
+            else if (type === 'newest') sorted.sort((a, b) => parseDate(b.folder) - parseDate(a.folder));
+
+            render(sorted);
+        }
+
+        function render(data) {
+            const container = document.getElementById('grid');
+            container.innerHTML = '';
+
+            data.forEach(p => {
+                const item = document.createElement('div');
+                item.className = `portfolio-item item-${p.size || 'normal'}`;
+                item.onclick = () => openModal(p.folder, p.count, p.title);
+
+                const thumbBg = document.createElement('div');
+                thumbBg.className = 'thumb-bg';
+                tryLoadImage(p.folder, '1', supportedExts, 0, (src) => {
+                    thumbBg.style.backgroundImage = `url('${src}')`;
+                });
+                item.appendChild(thumbBg);
+
+                const cardInner = document.createElement('div');
+                cardInner.className = 'card-inner';
+                cardInner.innerHTML = `
+                    <span class="card-title">${p.title}</span>
+                    <span class="card-date">${p.folder}</span>
+                `;
+                item.appendChild(cardInner);
+                container.appendChild(item);
+            });
+        }
+
+        function openModal(folder, count, title) {
+            curFolder = folder; curTotal = count; curTitle = title; curIdx = 1;
+            document.getElementById('imageModal').style.display = 'flex';
+            updateModal();
+        }
+
+        function updateModal() {
+            const modalImg = document.getElementById('modalImg');
+            modalImg.src = "";
+            tryLoadImage(curFolder, curIdx, supportedExts, 0, (src) => {
+                modalImg.src = src;
+            });
+            document.getElementById('pageInfo').innerText = `${curTitle} (${curIdx} / ${curTotal})`;
+        }
+
+        function moveImg(step) {
+            curIdx += step;
+            if (curIdx < 1) curIdx = curTotal;
+            if (curIdx > curTotal) curIdx = 1;
+            updateModal();
+        }
+
+        function closeModal() { document.getElementById('imageModal').style.display = 'none'; }
+
+        window.onkeydown = (e) => {
+            if (document.getElementById('imageModal').style.display === 'flex') {
+                if (e.key === "ArrowLeft") moveImg(-1);
+                if (e.key === "ArrowRight") moveImg(1);
+                if (e.key === "Escape") closeModal();
+            }
+        };
+
+        // 초기 페이지
+        window.onload = () => {
+            sortAndRender('upload');
+        };
+    </script>
+</body>
+</html>
