@@ -15,8 +15,9 @@ and optimizing them under real constraints.
 | :--- | :--- | :--- |
 | [0. Security & Crypto](#0-security-crypto) | authentication & cryptographic logic | `RESEARCHING` |
 | [1. Artificial Intelligence](#1-artificial-intelligence) | AI systems & optimization | `OPTIMIZING` |
-| [2. Game Modding](#2-game-modding) | system analysis & mechanics manipulation | `ACTIVE` |
+| [2. Server & Infrastructure](#2-server) | Client-aligned samples & brief docs | `WORKING` |
 | [3. Mathematics](#3-mathematics) | computational logic & algorithms | `THINKING` |
+| [4. Game Modding](#4-game-modding) | system analysis & mechanics manipulation | `ACTIVE` |
 
 ---
 
@@ -35,6 +36,7 @@ and optimizing them under real constraints.
 ---
 
 <h2 id="1-artificial-intelligence">⚡️ 1. Artificial Intelligence</h2>
+
 > Building and optimizing AI systems under performance constraints.
 
 ⚡️ See CLI for Robi 🔗 [C++](https://github.com/ulsidae/dev_logs/tree/main/AI/CLI%20for%20robi)
@@ -52,7 +54,29 @@ and optimizing them under real constraints.
 
 ---
 
-<h2 id="2-game-modding">🎮 2. Game Modding</h2>
+<h2 id="2-server">🖥️ 2. Server & Infrastructure</h2>
+
+> Secure and NDA-compliant samples tailored to client requirements with brief documentation.
+
+🖥️ See // 🔗 [Html]()
+- Description
+
+---
+
+<h2 id="3-mathematics">📐 3. Mathematics</h2>
+
+> The foundation behind optimized systems.
+
+🔢 See Strassen Algorithm 🔗 [C++](https://github.com/ulsidae/dev_logs/tree/main/Mathematics/Strassen%20Algorithm)
+- Reduces time complexity via divide-and-conquer  
+
+🔢 See Goldbach's conjecture 🔗 [Python](https://github.com/ulsidae/dev_logs/tree/main/Mathematics/Goldbach-Conjecture)
+- Explores brute-force verification efficiency
+
+---
+
+<h2 id="4-game-modding">🎮 4. Game Modding</h2>
+
 > Analyzing systems by breaking and rebuilding them.
 
 ```bash
@@ -60,15 +84,3 @@ Darkest Dungeon
 ```
 🎮 See Happiest Dungeon (System break experiment) 🔗 [JSON & configs](https://github.com/ulsidae/dev_logs/tree/main/game%20modding/Darkest%20Dungeon/HD)
 - Modifies core mechanics to test system limits  
----
-
-<h2 id="3-mathematics">📐 3. Mathematics</h2>
-> The foundation behind optimized systems.
-
-🔢 See Strassen Algorithm 🔗 [C++](https://github.com/ulsidae/dev_logs/tree/main/Mathematics/Strassen%20Algorithm)
-- Reduces time complexity via divide-and-conquer  
-
-🔢 See Goldbach's conjecture 🔗 [Python](https://github.com/ulsidae/dev_logs/tree/main/Mathematics/Goldbach-Conjecture)
-- Explores brute-force verification efficiency  
-
----
