@@ -58,8 +58,10 @@ and optimizing them under real constraints.
 
 > Secure and NDA-compliant samples tailored to client requirements with brief documentation.
 
-🖥️ See // 🔗 [Html]()
-- Description
+🖥️ See Dynamic Archive Interface 🔗 [JS & HTML](https://github.com/ulsidae/dev_logs/tree/main/Server/dynamic-archive-interface)
+- Dynamic masonry ordering via metadata-driven logic
+- Efficient re-rendering system using automated dense-packing
+- Flexible data-to-UI mapping based on custom input criteria
 
 ---
 
