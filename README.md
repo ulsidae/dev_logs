@@ -5,7 +5,7 @@ I build systems by breaking them, understanding them,
 and optimizing them under real constraints.
 ```
 
-> **License:** License: Apache-2.0 (Codebase only)
+> **License:** Apache-2.0 (Codebase only)
 
 > **Notice:** All written documentation, including this README, is proprietary. Unauthorized redistribution is strictly prohibited.
 ---
