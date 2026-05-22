@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blockchain Security Analysis</title>
+
+<style>
+    :root {
+        --bg: #f5f7fb;
+        --paper: #ffffff;
+        --text: #111;
+        --muted: #555;
+        --border: #d9d9d9;
+        --accent: #111;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Times New Roman', Georgia, serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.7;
+        padding: 40px 15px;
+    }
+
+    .paper-container {
+        max-width: 900px;
+        margin: 0 auto;
+        background: var(--paper);
+        padding: 70px 60px;
+        border: 1px solid var(--border);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    }
+
+    /* HEADER */
+    h1 {
+        font-size: 26px;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+    }
+
+    .subtitle {
+        text-align: center;
+        font-size: 13px;
+        color: var(--muted);
+        margin-bottom: 40px;
+    }
+
+    /* SECTIONS */
+    h2 {
+        font-size: 16px;
+        margin-top: 40px;
+        margin-bottom: 12px;
+        text-transform: uppercase;
+        border-bottom: 1px solid var(--accent);
+        padding-bottom: 6px;
+        letter-spacing: 0.5px;
+    }
+
+    h3 {
+        font-size: 14px;
+        margin-top: 22px;
+        margin-bottom: 10px;
+        font-style: italic;
+    }
+
+    p {
+        font-size: 14.5px;
+        margin-bottom: 14px;
+        text-align: justify;
+        text-indent: 14px;
+    }
+
+    /* NOTE BOX */
+    .note {
+        border-left: 3px solid var(--accent);
+        padding: 12px 14px;
+        margin: 20px 0;
+        background: #fafafa;
+        font-style: italic;
+        color: var(--muted);
+    }
+
+    /* CODE BLOCK */
+    .code {
+        font-family: monospace;
+        background: #f6f6f6;
+        padding: 16px;
+        border-left: 4px solid var(--accent);
+        font-size: 12.5px;
+        margin: 16px 0;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    /* FIGURE */
+    .figure-box {
+        margin: 35px 0;
+        text-align: center;
+        padding: 18px;
+        border: 1px dashed #ccc;
+        background: #fff;
+    }
+
+    .figure-box img {
+        max-width: 100%;
+        max-height: 360px;
+        filter: grayscale(10%);
+        transition: 0.3s ease;
+    }
+
+    .figure-box img:hover {
+        filter: grayscale(0%);
+        transform: scale(1.01);
+    }
+
+    .figure-caption {
+        font-size: 13px;
+        margin-top: 10px;
+        color: var(--muted);
+        font-style: italic;
+    }
+
+    /* LIST */
+    ul {
+        margin-left: 25px;
+        margin-bottom: 20px;
+    }
+
+    li {
+        font-size: 14.5px;
+        margin-bottom: 6px;
+    }
+
+    /* REFERENCES */
+    .reference-list {
+        list-style: none;
+        font-size: 13px;
+    }
+
+    .reference-list li {
+        margin-bottom: 8px;
+        text-indent: -22px;
+        padding-left: 22px;
+        color: var(--muted);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 700px) {
+        .paper-container {
+            padding: 40px 22px;
+        }
+
+        h1 {
+            font-size: 22px;
+        }
+    }
+
+</style>
+</head>
+
+<body>
+
+<div class="paper-container">
+
+    <h1>Blockchain Security Analysis</h1>
+    <div class="subtitle">
+        Distributed Systems • Cryptography • Adversarial Modeling
+    </div>
+
+    <h2>1. Introduction</h2>
+    <p>
+    Blockchain systems constitute a distributed state machine replicated over a permissionless peer-to-peer network, where no single entity is fully trusted.
+    State transitions are validated through consensus protocols operating under adversarial conditions.
+    </p>
+
+    <div class="note">
+    Trust is not eliminated in blockchain systems — it is redistributed into cryptographic and economic assumptions.
+    </div>
+
+    <h2>2. Formal System Model</h2>
+    <p>
+    A blockchain is an append-only ordered sequence of blocks linked via cryptographic hashes, forming a tamper-evident structure.
+    </p>
+
+    <div class="code">
+Block(i) = {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;previous_block_hash: SHA256_Hash,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;merkle_root: SHA256_Hash,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;timestamp: uint64,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;nonce: uint64<br>
+}
+    </div>
+
+    <p>
+    Security relies on the economic and computational infeasibility of rewriting history faster than the honest network extends the canonical chain.
+    </p>
+
+    <h2>3. Consensus Mechanisms</h2>
+
+    <h3>3.1 Byzantine Fault Tolerance</h3>
+    <p>
+    Consensus protocols address the Byzantine Generals Problem by enabling agreement on a consistent ordering of state transitions despite faulty or malicious participants.
+    </p>
+
+    <h3>3.2 Proof of Work</h3>
+    <p>
+    Proof of Work introduces computational cost into block production, making Sybil attacks economically infeasible under majority honest hash power assumptions.
+    </p>
+
+    <h3>3.3 Probabilistic Finality</h3>
+    <p>
+    Finality is probabilistic: confidence in a transaction increases as more blocks are appended, exponentially reducing reorganization probability.
+    </p>
+
+    <div class="note">
+    Finality emerges asymptotically, not instantaneously.
+    </div>
+
+    <h2>4. Core Security Properties</h2>
+
+    <h3>4.1 Cryptographic Integrity</h3>
+    <p>
+    Merkle trees enable efficient inclusion proofs without requiring full state reconstruction.
+    </p>
+
+    <h3>4.2 Decentralization Trade-offs</h3>
+    <p>
+    Real-world deployments exhibit partial centralization due to mining pools, infrastructure concentration, and custodial services.
+    </p>
+
+    <h2>5. Threat Model</h2>
+
+    <h3>5.1 51% Attack</h3>
+    <p>
+    A majority adversary can reorganize recent history and enable double-spending attacks.
+    </p>
+
+    <h3>5.2 MEV</h3>
+    <p>
+    Public mempools allow transaction ordering manipulation including reordering, censorship, and insertion strategies for economic gain.
+    </p>
+
+    <h3>5.3 Smart Contract Vulnerabilities</h3>
+
+    <div class="code">
+function withdraw() public {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;uint256 balance = balances[msg.sender];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;require(balance > 0);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(bool success, ) = msg.sender.call{value: balance}("");<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;balances[msg.sender] = 0;<br>
+}
+    </div>
+
+    <p>
+    External calls before state updates violate the Checks-Effects-Interactions pattern, enabling re-entrancy attacks.
+    </p>
+
+    <h2>6. Concurrency Model Comparison</h2>
+    <p>
+    Centralized systems rely on locking and isolation mechanisms, which can still produce race conditions under concurrency.
+    </p>
+
+    <p>
+    Blockchain replaces local concurrency control with globally agreed ordering via consensus.
+    </p>
+
+    <div class="figure-box">
+        <img src="a.png" alt="Concurrency Model">
+        <div class="figure-caption">
+        Centralized concurrency vs distributed consensus ordering.
+        </div>
+    </div>
+
+    <h2>7. Limitations</h2>
+
+    <ul>
+        <li>Scalability constrained by replication</li>
+        <li>Latency introduced by consensus</li>
+        <li>Security dependent on economic incentives</li>
+    </ul>
+
+    <h2>8. Conclusion</h2>
+    <p>
+    Blockchain systems represent a trade-off between decentralization, scalability, and security across both consensus and application layers.
+    </p>
+
+    <h2>References</h2>
+    <ul class="reference-list">
+        <li>[1] S. Nakamoto, Bitcoin (2008)</li>
+        <li>[2] L. Lamport, Byzantine Generals Problem (1982)</li>
+        <li>[3] Ethereum Foundation Documentation</li>
+    </ul>
+
+</div>
+
+</body>
+</html>
