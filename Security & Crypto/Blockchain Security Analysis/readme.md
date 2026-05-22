@@ -34,7 +34,7 @@ The focus of this repository is not implementation complexity, but structural un
 
 
 
-- **Re-engineering notes:** [📑 Why this project started](https://)
+- **Re-engineering notes:** [📑 Why this project started](https://github.com/ulsidae/RSVP-systems/blob/main/%F0%9F%93%9ABlockchain%20Security%20Re-Engineering)
 
 
 
