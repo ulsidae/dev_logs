@@ -33,7 +33,7 @@ and optimizing them under real constraints.
 - Implements time-based authentication using synchronized tokens (TOTP)
 - Focus: correctness and reproducibility
 
-🔒 See Blockchain Security Analysis 🔗 [JS & HTML](https://github.com/ulsidae/dev_logs/tree/main/Security%20%26%20Crypto/Blockchain%20Security%20Analysis)
+🔒 See Blockchain Security Analysis 🔗 [HTML](https://github.com/ulsidae/dev_logs/tree/main/Security%20%26%20Crypto/Blockchain%20Security%20Analysis)
 - Minimal structural documentation for security systems 
 - HTML-based blockchain security analysis
 
