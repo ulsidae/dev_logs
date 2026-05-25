@@ -32,7 +32,11 @@ and optimizing them under real constraints.
 🔒 See TOTP (Time-based One-Time Password) 🔗 [Python](https://github.com/ulsidae/dev_logs/tree/main/Security%20&%20Crypto/totp)
 - Implements time-based authentication using synchronized tokens (TOTP)
 - Focus: correctness and reproducibility
-  
+
+🔒 See Blockchain Security Analysis 🔗 [JS & HTML](https://github.com/ulsidae/dev_logs/tree/main/Security%20%26%20Crypto/Blockchain%20Security%20Analysis)
+- Minimal structural documentation for security systems 
+- HTML-based blockchain security analysis
+
 ---
 
 <h2 id="1-artificial-intelligence">⚡️ 1. Artificial Intelligence</h2>
