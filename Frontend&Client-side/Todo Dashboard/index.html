@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo Dashboard</title>
+    <style>
+        html, body {
+            background-color: #000000;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-color: #000000;
+            --card-bg: #11141c;        /* Card background */
+            --text-color: #f1f5f9;
+            --text-dim: #64748b;
+            --border-color: #1e2433;
+            --accent-color: #10b981;
+            --accent-glow: rgba(16, 185, 129, 0.2);
+            --btn-delete: #ef4444;
+        }
+
+        .todo-body * {
+            box-sizing: border-box;
+            /* Offline-friendly system fonts only */
+            font-family: -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .todo-body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 25px 15px;
+            border-radius: 16px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Today's Mindset Area */
+        .attitude-box {
+            background: linear-gradient(135deg, #14113c 0%, #080c14 100%);
+            padding: 25px 20px;
+            border-radius: 16px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 1px solid #23215e;
+            box-shadow: 0 4px 20px rgba(35, 33, 94, 0.3);
+        }
+
+        .attitude-box h2 {
+            margin: 0 0 10px 0;
+            font-size: 0.8rem;
+            color: #818cf8;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        #attitude-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #f59e0b;
+            text-shadow: 0 2px 10px rgba(245, 158, 11, 0.3);
+            line-height: 1.4;
+            word-break: keep-all;
+        }
+
+        /* Responsive Grid (1 column on mobile, 3 columns on desktop) */
+        .todo-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+
+        @media (min-width: 768px) {
+            .todo-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .todo-section {
+            background-color: var(--card-bg);
+            padding: 24px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .todo-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), 0 0 15px rgba(30, 36, 51, 0.6);
+        }
+
+        .todo-section h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #141a24;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+
+        /* Input Neon Styling */
+        .input-group {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .todo-input {
+            flex: 1;
+            background-color: #06080c;
+            border: 1px solid var(--border-color);
+            padding: 14px;
+            color: white;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .todo-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .todo-input::placeholder {
+            color: #334155;
+        }
+
+        .add-btn {
+            background-color: var(--accent-color);
+            color: #000000;
+            border: none;
+            padding: 0 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 700;
+            transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+        }
+
+        .add-btn:hover {
+            background-color: #34d399;
+            box-shadow: 0 0 15px rgba(52, 211, 153, 0.4);
+        }
+
+        .add-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* Todo List Item Styling */
+        .todo-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .todo-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 8px;
+            border-bottom: 1px solid #141a24;
+            gap: 12px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .todo-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Completed State */
+        .todo-item.completed .todo-text {
+            text-decoration: line-through;
+            color: var(--text-dim);
+            opacity: 0.6;
+        }
+
+        .todo-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex: 1;
+            cursor: pointer;
+        }
+
+        /* Custom Checkbox Style */
+        .todo-left input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--accent-color);
+            cursor: pointer;
+            border-radius: 6px;
+            border: 2px solid var(--border-color);
+            transition: transform 0.2s;
+        }
+
+        .todo-left input[type="checkbox"]:checked {
+            transform: scale(1.1);
+        }
+
+        .todo-text {
+            word-break: break-all;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #cbd5e1;
+            transition: color 0.2s, opacity 0.2s;
+        }
+
+        /* Minimalist Delete Button */
+        .del-btn {
+            background-color: rgba(239, 68, 68, 0.1);
+            border: none;
+            color: var(--btn-delete);
+            cursor: pointer;
+            padding: 6px 10px;
+            font-size: 0.8rem;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .del-btn:hover {
+            background-color: var(--btn-delete);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<div class="todo-body">
+    <!-- Top Mindset Box -->
+    <div class="attitude-box">
+        <h2>MINDSET</h2>
+        <div id="attitude-text"></div>
+    </div>
+
+    <!-- Todo Grid Sections -->
+    <div class="todo-grid">
+        <!-- Daily Routine -->
+        <div class="todo-section" id="sec-daily">
+            <h3>Daily Routines</h3>
+            <div class="input-group">
+                <input type="text" class="todo-input" placeholder="Add a routine...">
+                <button class="add-btn" onclick="addTodo('daily')">Add</button>
+            </div>
+            <ul class="todo-list" id="list-daily"></ul>
+        </div>
+
+        <!-- Today's Tasks -->
+        <div class="todo-section" id="sec-today">
+            <h3>Today's Tasks</h3>
+            <div class="input-group">
+                <input type="text" class="todo-input" placeholder="Add a task...">
+                <button class="add-btn" onclick="addTodo('today')">Add</button>
+            </div>
+            <ul class="todo-list" id="list-today"></ul>
+        </div>
+
+        <!-- Long-term Goals -->
+        <div class="todo-section" id="sec-long">
+            <h3>Long-term Goals</h3>
+            <div class="input-group">
+                <input type="text" class="todo-input" placeholder="Add a goal...">
+                <button class="add-btn" onclick="addTodo('long')">Add</button>
+            </div>
+            <ul class="todo-list" id="list-long"></ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    const attitudes = [
+        "check const attitudes",
+        "go to notepad & press Ctrl+f"
+    ];
+
+    function initAttitude() {
+        const randomIndex = Math.floor(Math.random() * attitudes.length);
+        document.getElementById('attitude-text').innerText = attitudes[randomIndex];
+    }
+
+    // LocalStorage integration - Offline Save
+    let todos = JSON.parse(localStorage.getItem('html-todos')) || { daily: [], today: [], long: [] };
+
+    function saveTodos() {
+        localStorage.setItem('html-todos', JSON.stringify(todos));
+    }
+
+    function renderTodos(type) {
+        const listEle = document.getElementById(`list-${type}`);
+        listEle.innerHTML = '';
+
+        todos[type].forEach((todo, index) => {
+            const li = document.createElement('li');
+            li.className = `todo-item ${todo.completed ? 'completed' : ''}`;
+
+            li.innerHTML = `
+                <div class="todo-left" onclick="toggleTodo('${type}', ${index})">
+                    <input type="checkbox" ${todo.completed ? 'checked' : ''} onclick="event.stopPropagation(); toggleTodo('${type}', ${index})">
+                    <span class="todo-text">${todo.text}</span>
+                </div>
+                <button class="del-btn" onclick="deleteTodo('${type}', ${index})">Delete</button>
+            `;
+            listEle.appendChild(li);
+        });
+    }
+
+    function addTodo(type) {
+        const input = document.querySelector(`#sec-${type} .todo-input`);
+        const text = input.value.trim();
+        if (!text) return;
+
+        todos[type].push({ text, completed: false });
+        input.value = '';
+        saveTodos();
+        renderTodos(type);
+    }
+
+    function toggleTodo(type, index) {
+        todos[type][index].completed = !todos[type][index].completed;
+        saveTodos();
+        renderTodos(type);
+    }
+
+    function deleteTodo(type, index) {
+        todos[type].splice(index, 1);
+        saveTodos();
+        renderTodos(type);
+    }
+
+    document.querySelectorAll('.todo-input').forEach(input => {
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const type = this.closest('.todo-section').id.replace('sec-', '');
+                addTodo(type);
+                this.blur();
+            }
+        });
+    });
+
+    initAttitude();
+    ['daily', 'today', 'long'].forEach(renderTodos);
+</script>
+
+</body>
+</html>
