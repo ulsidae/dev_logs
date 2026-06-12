@@ -3,6 +3,9 @@ A minimal local LLM interface for Robi.
 
 ⚡️ [Code](https://github.com/ulsidae/dev_logs/blob/main/AI/CLI%20for%20robi/CLI.cpp)
 
+What is Robi?
+- 🍯 [simple description video](https://www.youtube.com/shorts/fajKDKZw3y0)
+
 ---
 ​
 ## 📌 Motivation​
