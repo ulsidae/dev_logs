@@ -2,6 +2,11 @@
 
 ---
 
+🔗[Video](https://www.youtube.com/watch?v=KKGhX-3M7XY&t=1s)
+
+- ^ A brief technical overview of the local AI model configuration process. This video summarizes my approach to building lightweight, practical AI assistants without complex fine-tuning.
+
+
 This project explores how to get the most out of Ollama by creating lightweight custom models.
 
 Instead of relying on complex fine-tuning pipelines, the goal is to build simple and practical custom models using **Modelfiles**.
