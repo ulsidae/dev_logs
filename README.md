@@ -5,6 +5,10 @@ I build systems by breaking them, understanding them,
 and optimizing them under real constraints.
 ```
 
+🔗 [^ How I Developed This Mindset](https://github.com/ulsidae/dev_logs/blob/main/game%20modding/readme.md)
+
+---
+
 > **License:** Apache-2.0 (Codebase only)
 
 > **Notice:** All written documentation, including this README, is proprietary. Unauthorized redistribution is strictly prohibited.
@@ -80,13 +84,3 @@ and optimizing them under real constraints.
 - Explores brute-force verification efficiency
 
 ---
-
-<h2 id="4-game-modding">🎮 4. Game Modding</h2>
-
-> Analyzing systems by breaking and rebuilding them.
-
-```bash
-Darkest Dungeon
-```
-🎮 See Happiest Dungeon (System break experiment) 🔗 [JSON & configs](https://github.com/ulsidae/dev_logs/tree/main/game%20modding/Darkest%20Dungeon/HD)
-- Modifies core mechanics to test system limits  
