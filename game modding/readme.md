@@ -1,7 +1,7 @@
 **Note:** I’m not actively developing game mods these days.
 
 However, these experiences were what first sparked my interest in modifying systems, developing mods, and extending existing software.
-
+ 
 ---
 
 ## It all started with a simple question:
