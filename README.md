@@ -21,7 +21,6 @@ and optimizing them under real constraints.
 | [1. Artificial Intelligence](#1-artificial-intelligence) | AI systems & optimization | `OPTIMIZING` |
 | [2. Server & Infrastructure](#2-server) | Client-aligned samples & brief docs | `WORKING` |
 | [3. Mathematics](#3-mathematics) | computational logic & algorithms | `THINKING` |
-| [4. Game Modding](#4-game-modding) | system analysis & mechanics manipulation | `ACTIVE` |
 
 ---
 
