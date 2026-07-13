@@ -4,7 +4,7 @@
 
 ---
 
-<img src="https://github.com/ulsidae/dev_logs/blob/main/Mathematics/Strassen%20Algorithm/XD.png" height="400"/>
+<img src="https://github.com/ulsidae/dev_logs/blob/main/Mathematics/Strassen%20Algorithm/img/img2.png" height="400"/>
 
 > Originally written as a high school research report and later translated into English.
 
