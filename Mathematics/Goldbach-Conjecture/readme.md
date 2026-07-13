@@ -1,5 +1,7 @@
 ## 🔢 Goldbach's conjecture
 
+🌐 [Related video](https://www.youtube.com/watch?app=desktop&v=VBBFYJ-HbKw)
+
 ---
 
 ## 🍯 Introduction
@@ -51,7 +53,7 @@ for startNum in range(2, even + 1, 2):  # even까지 반복, 2씩 증가
 Because the prime list was limited, even small changes in the range produced very different results.
 Also, the nested loops resulted in $O(n^2)$ complexity.
 
-Ultimately, this approach revealed little about primes.
+Ultimately, this approach revealed little about the underlying nature of prime numbers, but it taught me a great deal about algorithms, computational limits, and mathematical experimentation.
 
 ---
 
@@ -65,23 +67,22 @@ To gain a better intuition, I decided to try a simple visual experiment:
 
 <img src="https://github.com/ulsidae/dev_logs/blob/main/Mathematics/Goldbach-Conjecture/Capture.PNG" height="400"/>
 
-I created a simple Prime Turtle Graphics.
-The visualization confirmed that primes appear unpredictable, 
-yet patterns emerge amid the chaos.
+I created a simple turtle graphics visualization of prime numbers.
+The visualization suggested that primes appear unpredictable, yet patterns emerge amid the chaos.
 
 ---
 
-## 🍯 Paradoxically
+## 🍯 Paradoxically...
 
-Paradoxically, the irregularity and abundance of primes suggest that:
+This visualization gave me a sense of why Goldbach's conjecture feels plausible.
 
-“there exists at least one combination to form any given even number.”
+Of course, intuition is not a mathematical proof.
 
 ---
 
 ## 🔢 Improved Code
 
-Let’s enhance the high school code using a Sieve of Eratosthenes for more efficiency.
+The high school implementation was later improved using a Sieve of Eratosthenes for better efficiency.
 
 🍯 [code](https://github.com/ulsidae/dev_logs/blob/main/Mathematics/Goldbach-Conjecture/main.py)
 
@@ -91,10 +92,8 @@ It can now handle much larger ranges automatically.
 
 ## 🔢 Conclusion
 
-> Q. Can infinity be proven?
-> A. No.
+> No matter how many finite cases we verify, we cannot establish Goldbach's conjecture for all even numbers through computation alone.
 
-Even if we divide finite ranges in countless ways, we cannot prove the infinite.
 Thus, this code has practical meaning only for supercomputers and remains highly inefficient.
 
 While largely theoretical, this approach was a great exercise in applying Python and practicing algorithmic thinking.
