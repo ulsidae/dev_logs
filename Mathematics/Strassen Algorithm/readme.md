@@ -1,9 +1,5 @@
 ## 🔢 Strassen Algorithm (Reconstructed)
 
-🍯 [Code](https://github.com/ulsidae/dev_logs/blob/main/Mathematics/Strassen%20Algorithm/Strassen.cpp)
-
----
-
 <img src="https://github.com/ulsidae/dev_logs/blob/main/Mathematics/Strassen%20Algorithm/img/img2.png" height="400"/>
 
 > Originally written as a high school research report and later translated into English.
@@ -12,15 +8,21 @@
 
 ## 💡 Summary
 
+<img src="https://github.com/ulsidae/dev_logs/blob/main/Mathematics/Strassen%20Algorithm/img/img1.png" height="400"/>
+
+🌐 [Video (English Subtitle)](https://www.youtube.com/watch?app=desktop&v=gfg5z7VVAfg)
+
 This repository contains a reconstructed implementation of the Strassen matrix multiplication algorithm,
 originally developed as part of a high school research project on time efficiency.
 
-The original implementation and materials were lost.
-This version was reconstructed based on conceptual understanding and reference material.
+The original code was lost.
+This version was reconstructed based on conceptual understanding and reference materials.
 
 ---
 
 ## 🔢 Strassen Algorithm
+
+🍯 [Code](https://github.com/ulsidae/dev_logs/blob/main/Mathematics/Strassen%20Algorithm/Strassen.cpp)
 
 Strassen’s algorithm improves matrix multiplication efficiency by recursively partitioning matrices into quadrants and reducing the number of multiplication operations from 8 to 7 at each step, which becomes increasingly beneficial as matrix size grows.
 
