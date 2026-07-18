@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>THE DILEMMA | System Interface</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+
+body {
+    height:100vh;
+    background:#050505;
+    color:#a0a0a0;
+    font-family:'Space Mono', monospace;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin:0;
+}
+
+.container {
+    width:440px;
+    padding:40px;
+    background:#0a0a0a;
+    border:2px solid #222;
+    border-top:4px solid #444;
+    box-shadow:0 20px 50px rgba(0,0,0,0.8);
+    text-align:center;
+}
+
+.header {
+    font-size:14px;
+    letter-spacing:6px;
+    margin-bottom:40px;
+    color:#666;
+}
+
+.score-board {
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:40px;
+    border-bottom:1px solid #222;
+    padding-bottom:20px;
+}
+
+.score-item {
+    font-size:10px;
+}
+
+.score-val {
+    font-size:24px;
+    color:#eee;
+    display:block;
+}
+
+.buttons {
+    display:flex;
+    justify-content:center;
+    gap:20px;
+}
+
+button {
+
+    width:140px;
+    height:80px;
+
+    border:1px solid #444;
+    background:#111;
+
+    color:#ddd;
+
+    cursor:pointer;
+
+    font-family:'Space Mono';
+    font-weight:bold;
+
+}
+
+
+button:disabled {
+    opacity:0.3;
+    cursor:not-allowed;
+}
+
+
+.red {
+    border-left:6px solid #b91c1c;
+}
+
+
+.blue {
+    border-left:6px solid #1d4ed8;
+}
+
+
+.confirm {
+
+    margin-top:25px;
+
+    width:300px;
+    height:45px;
+
+}
+
+
+.status {
+
+    margin-top:25px;
+
+    padding:10px;
+
+    font-size:10px;
+
+    letter-spacing:3px;
+
+    border:1px solid #222;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<div class="header">
+THE DILEMMA
+</div>
+
+
+<div class="score-board">
+
+<div class="score-item">
+MY SCORE
+<span class="score-val" id="myScore">0</span>
+</div>
+
+
+<div class="score-item">
+ROUND
+<span class="score-val" id="round">1/3</span>
+</div>
+
+
+<div class="score-item">
+ENEMY
+<span class="score-val" id="enemyScore">0</span>
+</div>
+
+
+</div>
+
+
+
+<div class="buttons">
+
+
+<button class="red"
+onclick="selectChoice('red')">
+RED
+</button>
+
+
+
+<button class="blue"
+onclick="selectChoice('blue')">
+BLUE
+</button>
+
+
+</div>
+
+
+
+<button class="confirm"
+onclick="confirmChoice()">
+
+CONFIRM
+
+</button>
+
+
+
+<div class="status" id="status">
+
+CONNECTING...
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+
+// 핵심 수정
+const SERVER = window.location.origin;
+
+
+let player = localStorage.getItem("player");
+
+let choice = null;
+
+
+
+async function join(){
+
+
+try{
+
+
+let res = await fetch(
+SERVER + "/join",
+{
+method:"POST"
+}
+);
+
+
+let data = await res.json();
+
+
+
+if(data.player){
+
+player=data.player;
+
+localStorage.setItem(
+"player",
+player
+);
+
+}
+
+
+
+updateStatus(
+data.status ||
+"JOINED"
+);
+
+
+
+}
+catch(e){
+
+updateStatus(
+"SERVER CONNECTION FAILED"
+);
+
+}
+
+
+}
+
+
+
+
+function selectChoice(c){
+
+
+choice=c;
+
+
+updateStatus(
+"SELECTED : "+c.toUpperCase()
+);
+
+
+}
+
+
+
+async function confirmChoice(){
+
+
+if(!choice){
+
+updateStatus(
+"SELECT FIRST"
+);
+
+return;
+
+}
+
+
+
+try{
+
+
+let res = await fetch(
+SERVER+"/select",
+{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+player:player,
+
+choice:choice
+
+})
+
+
+});
+
+
+let data=await res.json();
+
+
+
+await confirm();
+
+
+
+update(data);
+
+
+
+}
+
+catch(e){
+
+updateStatus(
+"LINK LOST"
+);
+
+}
+
+
+
+}
+
+
+
+
+
+async function confirm(){
+
+
+await fetch(
+
+SERVER+"/confirm",
+
+{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+
+body:JSON.stringify({
+
+player:player
+
+})
+
+
+}
+
+
+);
+
+
+}
+
+
+
+
+async function updateState(){
+
+
+try{
+
+
+let res=await fetch(
+SERVER+"/result"
+);
+
+
+let data=await res.json();
+
+
+update(data);
+
+
+
+}
+catch(e){}
+
+
+
+}
+
+
+
+
+
+function update(data){
+
+
+
+if(data.round){
+
+document.getElementById(
+"round"
+).innerText =
+data.round+"/3";
+
+}
+
+
+
+if(data.score){
+
+
+document.getElementById(
+"myScore"
+).innerText =
+data.score[player] || 0;
+
+
+
+let enemy =
+player==="player1"
+?
+"player2"
+:
+"player1";
+
+
+
+document.getElementById(
+"enemyScore"
+).innerText =
+data.score[enemy] || 0;
+
+
+}
+
+
+
+if(data.status){
+
+updateStatus(
+data.status
+);
+
+}
+
+
+
+if(data.finished){
+
+updateStatus(
+"GAME FINISHED"
+);
+
+}
+
+
+}
+
+
+
+
+
+function updateStatus(t){
+
+document.getElementById(
+"status"
+).innerText=t.toUpperCase();
+
+}
+
+
+
+
+
+join();
+
+
+setInterval(
+updateState,
+1000
+);
+
+
+
+</script>
+
+
+</body>
+
+</html>
