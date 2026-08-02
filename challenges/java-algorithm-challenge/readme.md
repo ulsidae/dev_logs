@@ -18,13 +18,21 @@ Through this challenge, I aim to:
 
 
 Problem
+
 ↓
+
 Analysis
+
 ↓
+
 Java Implementation
+
 ↓
+
 Testing
+
 ↓
+
 Commit
 
 
