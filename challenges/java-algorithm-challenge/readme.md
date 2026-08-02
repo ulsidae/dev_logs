@@ -43,3 +43,8 @@ Commit
 A one-day intensive challenge to measure my current problem-solving ability and identify areas for improvement.
 
 The focus is not perfection, but pushing my limits through practice.
+
+---
+
+Java Algorithm Challenge
+- Day 1: 8 problems solved
