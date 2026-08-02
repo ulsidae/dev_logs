@@ -40,9 +40,9 @@ Commit
 
 ## 🎯 Goal
 
-A one-day intensive challenge to measure my current problem-solving ability and identify areas for improvement.
+The goal of this challenge is to measure my current problem-solving ability by solving as many problems as possible within a limited time frame (approximately one hour).
 
-The focus is not perfection, but pushing my limits through practice.
+The focus is not perfection, but pushing my limits through intensive practice.
 
 ---
 
