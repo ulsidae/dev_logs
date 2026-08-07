@@ -5,24 +5,24 @@ ORG 0x7C00
 start:
     cli
 
-    ; initialize segment
+    ; Initialize segment registers
     xor ax, ax
     mov ds, ax
     mov es, ax
 
-    ; set stack
+    ; Set up stack
     mov ss, ax
     mov sp, 0x7C00
 
     sti
 
 
-    ; cls
+    ; Set VGA text mode
     mov ax, 0x0003
     int 0x10
 
 
-    ; print ASCII
+    ; Print boot message
     mov si, art
 
 print:
@@ -38,7 +38,7 @@ print:
 
 
 idle:
-    ; OS idle status
+    ; Halt CPU execution
     cli
     hlt
     jmp idle
@@ -60,8 +60,8 @@ art:
 
 
 
-; 512 byte boot sector
+; Pad boot sector to 512 bytes
 times 510-($-$$) db 0
 
-; boot signature
+; BIOS boot signature
 dw 0xAA55
