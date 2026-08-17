@@ -21,6 +21,14 @@ and optimizing them under real constraints.
 | [1. Artificial Intelligence](#1-artificial-intelligence) | AI systems & optimization | `OPTIMIZING` |
 | [2. Server & Infrastructure](#2-server) | Client-aligned samples & brief docs | `WORKING` |
 | [3. Mathematics](#3-mathematics) | computational logic & algorithms | `THINKING` |
+| [4. Idea Notes](#4-idea-notes) | experiments, prototypes & unfinished ideas | `EXPERIMENTING` |
+
+### 📝 Beyond the Repository
+For more raw notes and experiments,
+I recommend checking out [my blog](https://ulsidae.github.io/ulsidae/docs/blog).
+
+> `dev_logs` keeps the polished version.
+> The blog keeps the messy one.
 
 ---
 
@@ -32,9 +40,14 @@ and optimizing them under real constraints.
 # 🔐 = experiments
 # 🔒 = explanations / theory
 ```
+
 🔒 See TOTP (Time-based One-Time Password) 🔗 [Python](https://github.com/ulsidae/dev_logs/tree/main/Security%20&%20Crypto/totp)
 - Implements time-based authentication using synchronized tokens (TOTP)
 - Focus: correctness and reproducibility
+
+🔐 See Landa — CVE-2023-41974 🔗 [README.md](https://github.com/ulsidae/dev_logs/tree/main/Security%20%26%20Crypto/Landa%20%E2%80%94%20CVE-2023-41974)
+- Research notes on a physical use-after-free vulnerability in XNU
+- Explores low-level memory behavior and system-level experimentation
 
 🔒 See Blockchain Security Analysis 🔗 [HTML](https://github.com/ulsidae/dev_logs/tree/main/Security%20%26%20Crypto/Blockchain%20Security%20Analysis)
 - Minimal structural documentation for security systems 
@@ -77,9 +90,20 @@ and optimizing them under real constraints.
 > The foundation behind optimized systems.
 
 🔢 See Strassen Algorithm 🔗 [C++](https://github.com/ulsidae/dev_logs/tree/main/Mathematics/Strassen%20Algorithm)
-- Reduces time complexity via divide-and-conquer  
+- Reduces time complexity through divide-and-conquer 
 
 🔢 See Goldbach's conjecture 🔗 [Python](https://github.com/ulsidae/dev_logs/tree/main/Mathematics/Goldbach-Conjecture)
-- Explores brute-force verification efficiency
+- Explores the efficiency of brute-force verification
+
+---
+
+<h2 id="4-idea-notes">📓 4. Idea Notes</h2>
+
+> Small experiments, prototypes, and unfinished ideas.
+
+🎯 See Bullet Hell Dodge Experiment 🔗 [Python](https://github.com/ulsidae/dev_logs/tree/main/idea-notes/bullethell-dodge-experiment)
+
+- Screen-based game-agent experiment using computer vision
+- Explores object tracking, trajectory prediction, heuristic risk evaluation, and real-time control
 
 ---
