@@ -1,0 +1,4166 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI Logo Studio</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;600;700;800&family=Noto+Serif+KR:wght@400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+>
+
+<style>
+
+/* ============================================================
+   RESET
+============================================================ */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #0d0f14;
+    color: #f5f7fb;
+
+    font-family:
+        Inter,
+        "Noto Sans KR",
+        Arial,
+        sans-serif;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+/* ============================================================
+   APP
+============================================================ */
+
+.app {
+    width: min(1200px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 34px 0 70px;
+}
+
+.header {
+    margin-bottom: 26px;
+}
+
+.header h1 {
+    margin: 0;
+
+    font-size: 32px;
+    line-height: 1.15;
+
+    letter-spacing: -1.3px;
+}
+
+.header p {
+    margin: 9px 0 0;
+
+    color: #9299a8;
+
+    font-size: 14px;
+}
+
+
+/* ============================================================
+   PANEL
+============================================================ */
+
+.panel {
+    background: #171a21;
+
+    border: 1px solid #272c37;
+    border-radius: 18px;
+
+    padding: 22px;
+
+    margin-bottom: 20px;
+}
+
+.panel-title {
+    margin-bottom: 16px;
+
+    font-size: 16px;
+    font-weight: 700;
+}
+
+
+/* ============================================================
+   INPUT
+============================================================ */
+
+label {
+    display: block;
+
+    margin: 14px 0 7px;
+
+    color: #c9ced8;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+
+    border: 1px solid #303642;
+    outline: none;
+
+    background: #101218;
+    color: white;
+
+    border-radius: 10px;
+
+    padding: 12px 13px;
+
+    transition:
+        border-color .15s,
+        box-shadow .15s;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #6675ff;
+
+    box-shadow:
+        0 0 0 3px rgba(102,117,255,.08);
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+
+/* ============================================================
+   PRIMARY BUTTON
+============================================================ */
+
+.primary-btn {
+    width: 100%;
+
+    margin-top: 18px;
+
+    border: 0;
+    border-radius: 11px;
+
+    padding: 14px 18px;
+
+    background: #626cff;
+    color: white;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        transform .15s,
+        background .15s;
+}
+
+.primary-btn:hover {
+    background: #747dff;
+
+    transform:
+        translateY(-1px);
+}
+
+.primary-btn:disabled {
+    opacity: .5;
+
+    cursor: wait;
+
+    transform: none;
+}
+
+
+/* ============================================================
+   STATUS
+============================================================ */
+
+#status {
+    min-height: 20px;
+
+    margin: 12px 0 0;
+
+    color: #9da5b5;
+
+    font-size: 13px;
+}
+
+
+/* ============================================================
+   CANDIDATES
+============================================================ */
+
+.candidates {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 14px;
+}
+
+.candidate {
+    position: relative;
+
+    border: 2px solid #292e3a;
+    border-radius: 16px;
+
+    background: #101218;
+
+    padding: 10px;
+
+    cursor: pointer;
+
+    transition:
+        border-color .15s,
+        transform .15s,
+        box-shadow .15s;
+}
+
+.candidate:hover {
+    border-color: #555f79;
+
+    transform:
+        translateY(-2px);
+}
+
+.candidate.selected {
+    border-color: #6c76ff;
+
+    box-shadow:
+        0 0 0 3px rgba(108,118,255,.12);
+}
+
+
+/* ============================================================
+   TRANSPARENT PREVIEW
+============================================================ */
+
+.candidate-preview,
+.main-preview {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background-color: #f8f9fb;
+
+
+    background-image:
+        linear-gradient(
+            45deg,
+            rgba(0,0,0,.025) 25%,
+            transparent 25%
+        ),
+        linear-gradient(
+            -45deg,
+            rgba(0,0,0,.025) 25%,
+            transparent 25%
+        ),
+        linear-gradient(
+            45deg,
+            transparent 75%,
+            rgba(0,0,0,.025) 75%
+        ),
+        linear-gradient(
+            -45deg,
+            transparent 75%,
+            rgba(0,0,0,.025) 75%
+        );
+
+    background-size: 28px 28px;
+
+    background-position:
+        0 0,
+        0 14px,
+        14px -14px,
+        -14px 0;
+}
+
+.candidate-preview {
+    aspect-ratio: 1 / 1;
+}
+
+.candidate-preview svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+
+/* ============================================================
+   CANDIDATE INFO
+============================================================ */
+
+.candidate-info {
+    padding: 12px 5px 5px;
+}
+
+.candidate-title {
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.candidate-description {
+    margin-top: 4px;
+
+    color: #858d9c;
+
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+
+/* ============================================================
+   EDITOR
+============================================================ */
+
+.editor {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        330px;
+
+    gap: 20px;
+}
+
+
+/* ============================================================
+   MAIN PREVIEW
+============================================================ */
+
+.main-preview {
+    min-height: 600px;
+
+    border-radius: 16px;
+
+    padding: 35px;
+}
+
+.main-preview svg {
+    width: min(100%, 560px);
+    aspect-ratio: 1 / 1;
+
+    display: block;
+}
+
+
+/* ============================================================
+   CUSTOMIZE
+============================================================ */
+
+.customize {
+    background: #101218;
+
+    border: 1px solid #292e38;
+    border-radius: 15px;
+
+    padding: 18px;
+
+    overflow: hidden;
+}
+
+.customize h3 {
+    margin: 0 0 18px;
+
+    font-size: 17px;
+}
+
+.control-title {
+    margin-top: 18px;
+    margin-bottom: 8px;
+
+    color: #dce0e8;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+
+/* ============================================================
+   OPTION GRID
+============================================================ */
+
+.option-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 7px;
+}
+
+.option {
+    border: 1px solid #303642;
+
+    border-radius: 9px;
+
+    background: #181c24;
+    color: #cdd2dc;
+
+    padding: 9px 6px;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+    transition:
+        border-color .15s,
+        background .15s;
+}
+
+.option:hover {
+    border-color: #58627d;
+}
+
+.option.active {
+    background: #626cff;
+    border-color: #626cff;
+
+    color: white;
+}
+
+
+/* ============================================================
+   ICON SEARCH
+============================================================ */
+
+.icon-search {
+    display: flex;
+    gap: 7px;
+
+    margin-bottom: 9px;
+}
+
+.icon-search input {
+    min-width: 0;
+}
+
+.icon-search button {
+    flex: 0 0 auto;
+
+    border: 1px solid #303642;
+
+    border-radius: 9px;
+
+    padding: 0 13px;
+
+    background: #181c24;
+    color: white;
+
+    cursor: pointer;
+}
+
+.icon-search button:hover {
+    background: #222733;
+}
+
+.icon-search-results {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 7px;
+
+    max-height: 190px;
+
+    overflow-y: auto;
+}
+
+.icon-result {
+    min-width: 0;
+
+    aspect-ratio: 1 / 1;
+
+    border: 1px solid #303642;
+
+    border-radius: 9px;
+
+    background: #181c24;
+
+    color: #cdd2dc;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 4px;
+
+    cursor: pointer;
+
+    padding: 7px;
+}
+
+.icon-result:hover {
+    border-color: #626cff;
+}
+
+.icon-result img {
+    width: 30px;
+    height: 30px;
+}
+
+.icon-result span {
+    max-width: 100%;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+    font-size: 9px;
+
+    color: #81899a;
+}
+
+.icon-search-status {
+    color: #727b8c;
+
+    font-size: 11px;
+
+    min-height: 16px;
+
+    margin-bottom: 5px;
+}
+
+
+/* ============================================================
+   COLOR
+============================================================ */
+
+.color-options {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 8px;
+}
+
+.color-option {
+    height: 38px;
+
+    border-radius: 9px;
+
+    border: 2px solid transparent;
+
+    cursor: pointer;
+}
+
+.color-option.active {
+    border-color: white;
+
+    box-shadow:
+        0 0 0 2px #626cff;
+}
+
+.color-purple {
+    background:
+        linear-gradient(
+            135deg,
+            #6366f1,
+            #a855f7
+        );
+}
+
+.color-blue {
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #06b6d4
+        );
+}
+
+.color-black {
+    background:
+        linear-gradient(
+            135deg,
+            #111827,
+            #374151
+        );
+}
+
+.color-green {
+    background:
+        linear-gradient(
+            135deg,
+            #059669,
+            #84cc16
+        );
+}
+
+
+/* ============================================================
+   CUSTOM COLOR
+============================================================ */
+
+.custom-color-row {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 8px;
+
+    color: #aaa;
+}
+
+.custom-color-row input[type="color"] {
+    width: 48px;
+    height: 38px;
+
+    padding: 3px;
+}
+
+
+/* ============================================================
+   TYPOGRAPHY
+============================================================ */
+
+.font-select {
+    margin-bottom: 8px;
+}
+
+
+/* ============================================================
+   DOWNLOAD
+============================================================ */
+
+.downloads {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 8px;
+
+    margin-top: 14px;
+}
+
+.downloads button {
+    border: 1px solid #303642;
+
+    background: #181c24;
+    color: white;
+
+    border-radius: 9px;
+
+    padding: 11px;
+
+    cursor: pointer;
+}
+
+.downloads button:hover {
+    background: #222733;
+}
+
+
+/* ============================================================
+   EMPTY
+============================================================ */
+
+.empty {
+    color: #777f8e;
+
+    text-align: center;
+
+    padding: 80px 20px;
+}
+
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+
+@media (max-width: 900px) {
+
+    .candidates {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .editor {
+        grid-template-columns:
+            1fr;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .app {
+        width: calc(100% - 20px);
+
+        padding-top: 20px;
+    }
+
+    .candidates {
+        grid-template-columns:
+            1fr;
+    }
+
+    .main-preview {
+        min-height: 400px;
+
+        padding: 15px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="app">
+
+
+<!-- ==========================================================
+     HEADER
+=========================================================== -->
+
+<div class="header">
+
+    <h1>✨ AI Logo Studio</h1>
+
+    <p>
+        Generate four brand directions and refine your favorite.
+    </p>
+
+</div>
+
+
+<!-- ==========================================================
+     INPUT
+=========================================================== -->
+
+<div class="panel">
+
+    <div class="panel-title">
+        Brand Information
+    </div>
+
+
+    <label>
+        Gemini API Key
+    </label>
+
+    <input
+        id="key"
+        type="password"
+        placeholder="Enter your Gemini API key"
+    >
+
+
+    <label>
+        Brand Name
+    </label>
+
+    <input
+        id="brand"
+        placeholder="예: AURIX"
+    >
+
+
+    <label>
+        Brand Description
+    </label>
+
+    <textarea
+        id="desc"
+        placeholder="예: 개발자를 위한 AI 생산성 플랫폼"
+    ></textarea>
+
+
+    <button
+        id="generateButton"
+        class="primary-btn"
+        onclick="generate()"
+    >
+        Generate 4 Logo Concepts
+    </button>
+
+
+    <p id="status"></p>
+
+</div>
+
+
+<!-- ==========================================================
+     CANDIDATES
+=========================================================== -->
+
+<div class="panel">
+
+    <div class="panel-title">
+        Choose a Direction
+    </div>
+
+
+    <div
+        id="candidates"
+        class="candidates"
+    >
+
+        <div class="empty">
+            Generate your first logo concepts.
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ==========================================================
+     EDITOR
+=========================================================== -->
+
+<div class="panel">
+
+    <div class="panel-title">
+        Customize
+    </div>
+
+
+    <div class="editor">
+
+
+        <!-- PREVIEW -->
+
+        <div
+            id="mainPreview"
+            class="main-preview"
+        >
+
+            <div class="empty">
+                Select a logo concept.
+            </div>
+
+        </div>
+
+
+        <!-- CUSTOMIZE -->
+
+        <div class="customize">
+
+            <h3>
+                Customize Logo
+            </h3>
+
+
+            <!-- ICON -->
+
+            <div class="control-title">
+                Icon
+            </div>
+
+
+            <div class="icon-search">
+
+                <input
+                    id="iconSearch"
+                    placeholder="아이콘 검색 — 예: AI, 로켓, 잎, 방패"
+                    onkeydown="
+                        if(event.key === 'Enter')
+                            searchIcons()
+                    "
+                >
+
+                <button
+                    onclick="searchIcons()"
+                >
+                    Search
+                </button>
+
+            </div>
+
+
+            <div
+                id="iconSearchStatus"
+                class="icon-search-status"
+            ></div>
+
+
+            <div
+                id="iconResults"
+                class="icon-search-results"
+            ></div>
+
+
+            <!-- LAYOUT -->
+
+            <div class="control-title">
+                Layout
+            </div>
+
+
+            <div
+                id="layoutOptions"
+                class="option-grid"
+            >
+
+                <button
+                    class="option"
+                    data-layout="icon-top"
+                    onclick="setLayout('icon-top')"
+                >
+                    Top
+                </button>
+
+                <button
+                    class="option"
+                    data-layout="icon-left"
+                    onclick="setLayout('icon-left')"
+                >
+                    Left
+                </button>
+
+                <button
+                    class="option"
+                    data-layout="icon-only"
+                    onclick="setLayout('icon-only')"
+                >
+                    Icon only
+                </button>
+
+            </div>
+
+
+            <!-- COLOR -->
+
+            <div class="control-title">
+                Color
+            </div>
+
+
+            <div class="color-options">
+
+                <button
+                    class="color-option color-purple"
+                    data-color="purple"
+                    onclick="setColorTheme('purple')"
+                    title="Purple"
+                ></button>
+
+                <button
+                    class="color-option color-blue"
+                    data-color="blue"
+                    onclick="setColorTheme('blue')"
+                    title="Blue"
+                ></button>
+
+                <button
+                    class="color-option color-black"
+                    data-color="black"
+                    onclick="setColorTheme('black')"
+                    title="Black"
+                ></button>
+
+                <button
+                    class="color-option color-green"
+                    data-color="green"
+                    onclick="setColorTheme('green')"
+                    title="Green"
+                ></button>
+
+            </div>
+
+
+            <div class="custom-color-row">
+
+                <input
+                    id="customColor"
+                    type="color"
+                    value="#6366f1"
+                    onchange="setCustomColor(this.value)"
+                >
+
+                <span>
+                    Custom
+                </span>
+
+            </div>
+
+
+            <!-- TYPOGRAPHY -->
+
+            <div class="control-title">
+                Typography
+            </div>
+
+
+            <select
+                id="fontSelect"
+                class="font-select"
+                onchange="setFontFamily(this.value)"
+            >
+
+                <option value="Inter">
+                    Inter — Modern
+                </option>
+
+                <option value="Noto Sans KR">
+                    Noto Sans KR — 한글 / Modern
+                </option>
+
+                <option value="Noto Serif KR">
+                    Noto Serif KR — 한글 / Elegant
+                </option>
+
+                <option value="IBM Plex Sans">
+                    IBM Plex Sans — Tech
+                </option>
+
+                <option value="Space Grotesk">
+                    Space Grotesk — Geometric
+                </option>
+
+                <option value="Montserrat">
+                    Montserrat — Brand
+                </option>
+
+                <option value="Roboto">
+                    Roboto — Clean
+                </option>
+
+                <option value="Playfair Display">
+                    Playfair Display — Elegant
+                </option>
+
+            </select>
+
+
+            <div
+                class="option-grid"
+            >
+
+                <button
+                    class="option"
+                    data-font="modern"
+                    onclick="setTypography('modern')"
+                >
+                    Modern
+                </button>
+
+                <button
+                    class="option"
+                    data-font="geometric"
+                    onclick="setTypography('geometric')"
+                >
+                    Geometric
+                </button>
+
+                <button
+                    class="option"
+                    data-font="elegant"
+                    onclick="setTypography('elegant')"
+                >
+                    Elegant
+                </button>
+
+            </div>
+
+
+            <!-- DOWNLOAD -->
+
+            <div class="downloads">
+
+                <button onclick="downloadSVG()">
+                    SVG
+                </button>
+
+                <button onclick="downloadPNG()">
+                    PNG
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</div>
+
+
+<script>
+
+/* ============================================================
+   GLOBAL STATE
+============================================================ */
+
+let concepts = [];
+
+let selectedIndex = -1;
+
+let currentDesign = null;
+
+let currentSVG = "";
+
+let brandName = "";
+
+let iconSearchTimer = null;
+
+
+/* ============================================================
+   ICONIFY
+============================================================ */
+
+const ICONIFY_API =
+    "https://api.iconify.design";
+
+
+const KOREAN_ICON_TERMS = {
+
+    "인공지능": "ai artificial intelligence brain robot",
+    "ai": "ai artificial intelligence brain robot",
+    "로봇": "robot bot android",
+    "봇": "robot bot android",
+    "개발": "code developer programming terminal",
+    "개발자": "code developer programming terminal",
+    "코드": "code programming terminal",
+    "컴퓨터": "computer monitor cpu",
+    "서버": "server database cloud",
+    "클라우드": "cloud cloud computing",
+    "보안": "security shield lock",
+    "방패": "shield security",
+    "로켓": "rocket launch startup",
+    "성장": "growth chart arrow trending",
+    "속도": "speed lightning zap",
+    "번개": "lightning zap energy",
+    "에너지": "energy lightning",
+    "잎": "leaf nature eco",
+    "나뭇잎": "leaf nature eco",
+    "자연": "nature leaf tree",
+    "환경": "eco leaf environment",
+    "지구": "earth globe world",
+    "세계": "globe earth world",
+    "사랑": "heart love",
+    "하트": "heart love",
+    "게임": "gamepad gaming controller",
+    "게임패드": "gamepad controller gaming",
+    "음악": "music note audio",
+    "카메라": "camera photography",
+    "사진": "camera image photo",
+    "보석": "gem diamond luxury",
+    "다이아몬드": "diamond gem",
+    "왕관": "crown luxury",
+    "럭셔리": "crown diamond gem luxury",
+    "목표": "target bullseye goal",
+    "네트워크": "network nodes connection",
+    "연결": "link connection network",
+    "데이터": "database data server",
+    "분석": "analytics chart graph",
+    "그래프": "chart analytics graph",
+    "차트": "chart analytics graph",
+    "빛": "sparkles star sun",
+    "별": "star sparkles",
+    "불": "flame fire",
+    "불꽃": "flame fire",
+    "커피": "coffee cafe",
+    "집": "home house",
+    "교육": "book education graduation",
+    "학교": "school education",
+    "책": "book education",
+    "사람": "user people person",
+    "사용자": "user people person",
+    "팀": "users team people",
+    "쇼핑": "shopping cart bag",
+    "상점": "store shop",
+    "핀": "pin location",
+    "위치": "location map pin",
+    "지도": "map location",
+    "검색": "search magnifier",
+    "메일": "mail email",
+    "메시지": "message chat",
+    "채팅": "chat message",
+    "설정": "settings gear",
+    "도구": "tools wrench",
+    "마법": "magic wand sparkles",
+    "창의성": "creative palette sparkles",
+    "디자인": "palette design pen",
+    "보호": "shield security lock",
+    "열쇠": "key security",
+    "잠금": "lock security"
+};
+
+
+/* ============================================================
+   COLOR THEMES
+============================================================ */
+
+const COLOR_THEMES = {
+
+    purple: {
+
+        primary: "#6366f1",
+        secondary: "#f5f3ff",
+        accent: "#a855f7",
+        text: "#111827"
+
+    },
+
+    blue: {
+
+        primary: "#2563eb",
+        secondary: "#eff6ff",
+        accent: "#06b6d4",
+        text: "#111827"
+
+    },
+
+    black: {
+
+        primary: "#111827",
+        secondary: "#f3f4f6",
+        accent: "#374151",
+        text: "#111827"
+
+    },
+
+    green: {
+
+        primary: "#059669",
+        secondary: "#ecfdf5",
+        accent: "#84cc16",
+        text: "#111827"
+
+    }
+
+};
+
+
+/* ============================================================
+   FONT PRESETS
+============================================================ */
+
+const TYPOGRAPHY = {
+
+    modern: {
+
+        family: "Inter",
+        weight: 700,
+        spacing: 0
+
+    },
+
+    geometric: {
+
+        family: "Space Grotesk",
+        weight: 700,
+        spacing: .5
+
+    },
+
+    elegant: {
+
+        family: "Playfair Display",
+        weight: 700,
+        spacing: .2
+
+    }
+
+};
+
+
+/* ============================================================
+   ICON QUERY TRANSLATION
+============================================================ */
+
+function expandIconQuery(query) {
+
+    if (!query) {
+
+        return "sparkles";
+
+    }
+
+    let value =
+        String(query)
+            .toLowerCase()
+            .trim();
+
+
+    const parts = [];
+
+
+    for (
+        const [k, v]
+        of Object.entries(
+            KOREAN_ICON_TERMS
+        )
+    ) {
+
+        if (
+            value.includes(k)
+        ) {
+
+            parts.push(v);
+
+        }
+
+    }
+
+
+    parts.push(value);
+
+
+    return [
+        ...new Set(
+            parts
+                .join(" ")
+                .split(/\s+/)
+                .filter(Boolean)
+        )
+    ]
+        .slice(0, 12)
+        .join(" ");
+
+}
+
+
+/* ============================================================
+   ICONIFY SEARCH
+============================================================ */
+
+async function searchIconify(
+    query,
+    limit = 8
+) {
+
+    const expanded =
+        expandIconQuery(
+            query
+        );
+
+
+    try {
+
+        const url =
+            `${ICONIFY_API}/search?query=${encodeURIComponent(expanded)}&limit=${limit}`;
+
+
+        const response =
+            await fetch(
+                url,
+                {
+                    cache: "force-cache"
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Icon search failed."
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        return (
+            data.icons || []
+        );
+
+    } catch (error) {
+
+        console.warn(
+            "Iconify search error:",
+            error
+        );
+
+
+        return [];
+
+    }
+
+}
+
+
+/* ============================================================
+   ICON SVG URL
+============================================================ */
+
+function iconURL(
+    iconName
+) {
+
+
+    return `${ICONIFY_API}/${iconName}.svg`;
+
+}
+
+
+/* ============================================================
+   LOAD ICON SVG
+============================================================ */
+
+async function loadIconSVG(
+    iconName,
+    color = "#111827"
+) {
+
+    if (!iconName) {
+
+        return fallbackIconSVG(
+            color
+        );
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                iconURL(
+                    iconName
+                ),
+                {
+                    cache:
+                        "force-cache"
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Icon load failed"
+            );
+
+        }
+
+
+        let svg =
+            await response.text();
+
+
+        /*
+         * SVG를 그대로 중첩하기 때문에
+         * 외부 SVG의 width / height는 제거.
+         */
+
+        svg =
+            svg
+                .replace(
+                    /<\?xml[^>]*>/gi,
+                    ""
+                )
+                .replace(
+                    /<!DOCTYPE[^>]*>/gi,
+                    ""
+                )
+                .replace(
+                    /<svg([^>]*)>/i,
+                    (match, attrs) => {
+
+                        let clean =
+                            attrs
+                                .replace(
+                                    /\s(width|height)="[^"]*"/gi,
+                                    ""
+                                )
+                                .replace(
+                                    /\sstyle="[^"]*"/gi,
+                                    ""
+                                );
+
+                        return `<svg${clean}>`;
+
+                    }
+                );
+
+        svg =
+            svg
+                .replace(
+                    /currentColor/g,
+                    color
+                );
+
+
+        return svg;
+
+    } catch {
+
+        return fallbackIconSVG(
+            color
+        );
+
+    }
+
+}
+
+
+/* ============================================================
+   FALLBACK ICON
+============================================================ */
+
+function fallbackIconSVG(
+    color
+) {
+
+    return `
+
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="${color}"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        >
+
+            <path
+                d="M12 3
+                   L14.8 9.2
+                   L21 12
+                   L14.8 14.8
+                   L12 21
+                   L9.2 14.8
+                   L3 12
+                   L9.2 9.2
+                   Z"
+            />
+
+        </svg>
+
+    `;
+
+}
+
+
+/* ============================================================
+   GENERATE
+============================================================ */
+
+async function generate() {
+
+    const key =
+        document
+            .getElementById("key")
+            .value
+            .trim();
+
+
+    brandName =
+        document
+            .getElementById("brand")
+            .value
+            .trim();
+
+
+    const desc =
+        document
+            .getElementById("desc")
+            .value
+            .trim();
+
+
+    if (!key) {
+
+        alert(
+            "Gemini API Key를 입력해줘."
+        );
+
+        return;
+
+    }
+
+
+    if (!brandName) {
+
+        alert(
+            "Brand Name을 입력해줘."
+        );
+
+        return;
+
+    }
+
+
+    if (!desc) {
+
+        alert(
+            "Brand Description을 입력해줘."
+        );
+
+        return;
+
+    }
+
+
+    const button =
+        document.getElementById(
+            "generateButton"
+        );
+
+
+    button.disabled = true;
+
+
+    setStatus(
+        "AI가 브랜드 방향을 설계하는 중..."
+    );
+
+    const prompt = `
+
+You are a senior professional brand identity designer.
+
+Create FOUR genuinely different logo concepts.
+
+Brand name:
+${brandName}
+
+Brand description:
+${desc}
+
+
+The four concepts MUST be:
+
+1. Minimal
+2. Symbolic
+3. Monogram
+4. Emblem
+
+
+Important:
+
+Do NOT create SVG.
+
+Do NOT create SVG paths.
+
+Do NOT create HTML.
+
+Return design specifications only.
+
+
+For each concept provide:
+
+- direction
+- description
+- iconQuery
+- layout
+- shape
+- primaryColor
+- secondaryColor
+- accentColor
+- textColor
+- fontStyle
+- fontWeight
+- letterSpacing
+- iconScale
+- tagline
+
+
+iconQuery is VERY IMPORTANT.
+
+It should describe the visual symbol that should be searched
+in an icon library.
+
+Examples:
+
+AI developer platform:
+"AI brain technology"
+
+fitness:
+"fitness dumbbell activity"
+
+security:
+"shield lock security"
+
+environment:
+"leaf eco nature"
+
+finance:
+"chart growth finance"
+
+Do NOT use arbitrary invented icon names.
+
+
+Allowed layouts:
+
+icon-top
+icon-left
+icon-only
+
+
+Allowed shapes:
+
+none
+circle
+rounded-square
+hexagon
+pill
+
+
+Allowed fontStyle:
+
+modern
+geometric
+elegant
+
+
+Return EXACTLY this JSON structure:
+
+[
+  {
+    "direction": "Minimal",
+    "description": "short explanation",
+    "iconQuery": "AI technology",
+    "layout": "icon-top",
+    "shape": "circle",
+    "primaryColor": "#6366f1",
+    "secondaryColor": "#f5f3ff",
+    "accentColor": "#a855f7",
+    "textColor": "#111827",
+    "fontStyle": "modern",
+    "fontWeight": 700,
+    "letterSpacing": 0,
+    "iconScale": 1,
+    "tagline": ""
+  }
+]
+
+
+Rules:
+
+- exactly four objects
+- one Minimal
+- one Symbolic
+- one Monogram
+- one Emblem
+- valid JSON
+- valid 6 digit hex colors
+- no markdown
+- no code fences
+- no SVG
+- no SVG paths
+- iconScale between 0.75 and 1.2
+- fontWeight must be 400, 500, 600, 700 or 800
+- letterSpacing between -1 and 5
+- keep descriptions short
+`;
+
+
+    try {
+
+        const response =
+            await fetch(
+
+                "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key="
+                +
+                encodeURIComponent(key),
+
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            contents: [
+
+                                {
+
+                                    parts: [
+
+                                        {
+                                            text:
+                                                prompt
+                                        }
+
+                                    ]
+
+                                }
+
+                            ],
+
+                            generationConfig: {
+
+                                temperature:
+                                    0.55,
+
+                                maxOutputTokens:
+                                    2200,
+
+                                responseMimeType:
+                                    "application/json"
+
+                            }
+
+                        })
+
+                }
+
+            );
+
+
+        if (!response.ok) {
+
+            const errorText =
+                await response.text();
+
+            throw new Error(
+                errorText
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        let text =
+            data
+                ?.candidates?.[0]
+                ?.content?.parts?.[0]
+                ?.text;
+
+
+        if (!text) {
+
+            throw new Error(
+                "Gemini returned no content."
+            );
+
+        }
+
+
+        text =
+            cleanJSON(
+                text
+            );
+
+
+        let parsed;
+
+
+        try {
+
+            parsed =
+                JSON.parse(
+                    text
+                );
+
+        } catch {
+
+            const match =
+                text.match(
+                    /\[[\s\S]*\]/
+                );
+
+
+            if (!match) {
+
+                throw new Error(
+                    "Invalid JSON from Gemini."
+                );
+
+            }
+
+
+            parsed =
+                JSON.parse(
+                    match[0]
+                );
+
+        }
+
+
+        if (
+            !Array.isArray(
+                parsed
+            )
+        ) {
+
+            if (
+                Array.isArray(
+                    parsed.concepts
+                )
+            ) {
+
+                parsed =
+                    parsed.concepts;
+
+            } else {
+
+                throw new Error(
+                    "Gemini result is not an array."
+                );
+
+            }
+
+        }
+
+
+        concepts =
+            parsed
+                .slice(0, 4)
+                .map(
+                    normalizeDesign
+                );
+
+
+        while (
+            concepts.length < 4
+        ) {
+
+            concepts.push(
+                fallbackDesign(
+                    concepts.length
+                )
+            );
+
+        }
+
+
+        setStatus(
+            "디자인에 맞는 아이콘을 찾는 중..."
+        );
+
+
+        await Promise.all(
+
+            concepts.map(
+                async design => {
+
+                    const results =
+                        await searchIconify(
+                            design.iconQuery,
+                            5
+                        );
+
+
+                    if (
+                        results.length
+                    ) {
+
+                        design.iconResults =
+                            results;
+
+                        design.iconName =
+                            results[0];
+
+                    }
+
+                }
+            )
+
+        );
+
+
+        renderCandidates();
+
+        selectConcept(0);
+
+
+        setStatus(
+            "4개의 디자인 방향이 완성됐어 ✨"
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "GENERATION ERROR:",
+            error
+        );
+
+
+        /*
+         * fallback에서도 아이콘 검색.
+         */
+
+        concepts = [
+
+            fallbackDesign(0),
+            fallbackDesign(1),
+            fallbackDesign(2),
+            fallbackDesign(3)
+
+        ];
+
+
+        setStatus(
+            "AI 응답 오류 — 기본 디자인을 준비하는 중..."
+        );
+
+
+        await Promise.all(
+
+            concepts.map(
+                async design => {
+
+                    const results =
+                        await searchIconify(
+                            design.iconQuery,
+                            5
+                        );
+
+
+                    if (
+                        results.length
+                    ) {
+
+                        design.iconResults =
+                            results;
+
+                        design.iconName =
+                            results[0];
+
+                    }
+
+                }
+            )
+
+        );
+
+
+        renderCandidates();
+
+        selectConcept(0);
+
+
+        setStatus(
+            "기본 디자인이 준비됐어. API 응답을 확인해봐."
+        );
+
+    }
+
+
+    button.disabled = false;
+
+}
+
+
+/* ============================================================
+   CLEAN JSON
+============================================================ */
+
+function cleanJSON(
+    text
+) {
+
+    return String(text)
+
+        .replace(
+            /```json/gi,
+            ""
+        )
+
+        .replace(
+            /```/g,
+            ""
+        )
+
+        .trim();
+
+}
+
+
+/* ============================================================
+   NORMALIZE
+============================================================ */
+
+function normalizeDesign(
+    design,
+    index = 0
+) {
+
+    const fallback =
+        fallbackDesign(index);
+
+
+    return {
+
+        direction:
+            validDirection(
+                design?.direction,
+                fallback.direction
+            ),
+
+        description:
+            typeof design?.description === "string"
+                ? design.description
+                : fallback.description,
+
+        iconQuery:
+            typeof design?.iconQuery === "string"
+                ? design.iconQuery
+                : fallback.iconQuery,
+
+        iconName:
+            "",
+
+        iconResults:
+            [],
+
+        layout:
+            validLayout(
+                design?.layout,
+                fallback.layout
+            ),
+
+        shape:
+            validShape(
+                design?.shape,
+                fallback.shape
+            ),
+
+        primaryColor:
+            validColor(
+                design?.primaryColor,
+                fallback.primaryColor
+            ),
+
+        secondaryColor:
+            validColor(
+                design?.secondaryColor,
+                fallback.secondaryColor
+            ),
+
+        accentColor:
+            validColor(
+                design?.accentColor,
+                fallback.accentColor
+            ),
+
+        textColor:
+            validColor(
+                design?.textColor,
+                fallback.textColor
+            ),
+
+        fontStyle:
+            validFont(
+                design?.fontStyle,
+                fallback.fontStyle
+            ),
+
+        fontWeight:
+            [400,500,600,700,800]
+                .includes(
+                    Number(
+                        design?.fontWeight
+                    )
+                )
+                ? Number(
+                    design.fontWeight
+                )
+                : fallback.fontWeight,
+
+        letterSpacing:
+            clamp(
+                Number(
+                    design?.letterSpacing
+                ) || 0,
+                -1,
+                5
+            ),
+
+        iconScale:
+            clamp(
+                Number(
+                    design?.iconScale
+                ) || 1,
+                .75,
+                1.2
+            ),
+
+        tagline:
+            typeof design?.tagline === "string"
+                ? design.tagline
+                : ""
+
+    };
+
+}
+
+
+/* ============================================================
+   FALLBACK
+============================================================ */
+
+function fallbackDesign(
+    index
+) {
+
+    const designs = [
+
+        {
+
+            direction:
+                "Minimal",
+
+            description:
+                "Simple, clean and memorable.",
+
+            iconQuery:
+                "sparkles minimal technology",
+
+            iconName: "",
+
+            iconResults: [],
+
+            layout:
+                "icon-top",
+
+            shape:
+                "circle",
+
+            primaryColor:
+                "#6366f1",
+
+            secondaryColor:
+                "#f5f3ff",
+
+            accentColor:
+                "#a855f7",
+
+            textColor:
+                "#111827",
+
+            fontStyle:
+                "modern",
+
+            fontWeight:
+                700,
+
+            letterSpacing:
+                0,
+
+            iconScale:
+                .9,
+
+            tagline:
+                ""
+
+        },
+
+        {
+
+            direction:
+                "Symbolic",
+
+            description:
+                "A strong visual metaphor.",
+
+            iconQuery:
+                "brain technology AI",
+
+            iconName: "",
+
+            iconResults: [],
+
+            layout:
+                "icon-left",
+
+            shape:
+                "rounded-square",
+
+            primaryColor:
+                "#2563eb",
+
+            secondaryColor:
+                "#eff6ff",
+
+            accentColor:
+                "#06b6d4",
+
+            textColor:
+                "#111827",
+
+            fontStyle:
+                "geometric",
+
+            fontWeight:
+                700,
+
+            letterSpacing:
+                .5,
+
+            iconScale:
+                .82,
+
+            tagline:
+                ""
+
+        },
+
+        {
+
+            direction:
+                "Monogram",
+
+            description:
+                "Typography-led identity.",
+
+            iconQuery:
+                "letter monogram geometric",
+
+            iconName: "",
+
+            iconResults: [],
+
+            layout:
+                "icon-only",
+
+            shape:
+                "none",
+
+            primaryColor:
+                "#111827",
+
+            secondaryColor:
+                "#f3f4f6",
+
+            accentColor:
+                "#374151",
+
+            textColor:
+                "#111827",
+
+            fontStyle:
+                "elegant",
+
+            fontWeight:
+                800,
+
+            letterSpacing:
+                2,
+
+            iconScale:
+                .85,
+
+            tagline:
+                ""
+
+        },
+
+        {
+
+            direction:
+                "Emblem",
+
+            description:
+                "A contained badge identity.",
+
+            iconQuery:
+                "shield emblem badge",
+
+            iconName: "",
+
+            iconResults: [],
+
+            layout:
+                "icon-top",
+
+            shape:
+                "hexagon",
+
+            primaryColor:
+                "#059669",
+
+            secondaryColor:
+                "#ecfdf5",
+
+            accentColor:
+                "#84cc16",
+
+            textColor:
+                "#111827",
+
+            fontStyle:
+                "modern",
+
+            fontWeight:
+                700,
+
+            letterSpacing:
+                0,
+
+            iconScale:
+                .75,
+
+            tagline:
+                ""
+
+        }
+
+    ];
+
+
+    return designs[
+        index %
+        designs.length
+    ];
+
+}
+
+
+/* ============================================================
+   RENDER CANDIDATES
+============================================================ */
+
+async function renderCandidates() {
+
+    const container =
+        document.getElementById(
+            "candidates"
+        );
+
+
+    container.innerHTML = "";
+
+
+    concepts.forEach(
+        (design, index) => {
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "candidate";
+
+
+            card.dataset.index =
+                index;
+
+
+            card.onclick =
+                () => {
+
+                    selectConcept(
+                        index
+                    );
+
+                };
+
+
+            card.innerHTML = `
+
+                <div class="candidate-preview">
+
+                    <div
+                        class="candidate-svg-slot"
+                        style="
+                            width:100%;
+                            height:100%;
+                        "
+                    >
+
+                        ${renderSVG(
+                            design,
+                            brandName,
+                            true
+                        )}
+
+                    </div>
+
+                </div>
+
+                <div class="candidate-info">
+
+                    <div class="candidate-title">
+                        ${escapeHTML(
+                            design.direction
+                        )}
+                    </div>
+
+                    <div class="candidate-description">
+                        ${escapeHTML(
+                            design.description
+                        )}
+                    </div>
+
+                </div>
+
+            `;
+
+
+            container.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+/* ============================================================
+   SELECT
+============================================================ */
+
+async function selectConcept(
+    index
+) {
+
+    if (
+        !concepts[index]
+    ) {
+
+        return;
+
+    }
+
+
+    selectedIndex =
+        index;
+
+
+    currentDesign =
+        deepClone(
+            concepts[index]
+        );
+
+
+    document
+        .querySelectorAll(
+            ".candidate"
+        )
+        .forEach(
+            (card, i) => {
+
+                card.classList.toggle(
+                    "selected",
+                    i === index
+                );
+
+            }
+        );
+
+
+    /*
+     * 선택된 디자인에 아이콘이 아직 없다면
+     * 여기서 검색.
+     */
+
+    if (
+        !currentDesign.iconName
+    ) {
+
+        const results =
+            await searchIconify(
+                currentDesign.iconQuery,
+                5
+            );
+
+
+        currentDesign.iconResults =
+            results;
+
+
+        currentDesign.iconName =
+            results[0] || "";
+
+    }
+
+
+    renderMain();
+
+    renderIconResults();
+
+    updateControls();
+
+}
+
+
+/* ============================================================
+   MAIN
+============================================================ */
+
+async function renderMain() {
+
+    const preview =
+        document.getElementById(
+            "mainPreview"
+        );
+
+
+    if (!currentDesign) {
+
+        preview.innerHTML = `
+            <div class="empty">
+                Select a logo concept.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    preview.innerHTML =
+        renderSVG(
+            currentDesign,
+            brandName,
+            false
+        );
+
+
+    currentSVG =
+        preview.innerHTML;
+
+}
+
+
+/* ============================================================
+   SVG RENDERER
+============================================================ */
+
+function renderSVG(
+    design,
+    brand,
+    candidate = false
+) {
+
+    const primary =
+        design.primaryColor;
+
+
+    const secondary =
+        design.secondaryColor;
+
+
+    const accent =
+        design.accentColor;
+
+
+    const textColor =
+        design.textColor;
+
+
+    const scale =
+        design.iconScale || 1;
+
+
+    const layout =
+        design.layout;
+
+
+    const shape =
+        design.shape;
+
+
+    const fontFamily =
+        design.fontFamily
+        ||
+        (
+            TYPOGRAPHY[
+                design.fontStyle
+            ]
+            ?.family
+            ||
+            "Inter"
+        );
+
+
+    const fontWeight =
+        design.fontWeight
+        || 700;
+
+
+    const letterSpacing =
+        design.letterSpacing
+        ?? 0;
+
+
+    /*
+     * 아이콘을 동기적으로 가져올 수 없기 때문에
+     * 기존 iconName이 있을 때 외부 URL <image>를 사용한다.
+     *
+     * Iconify SVG는 외부 SVG URL이므로
+     * 브라우저 preview에서는 즉시 표시된다.
+     */
+
+    const icon =
+        design.iconName
+        ? iconURL(
+            design.iconName
+        )
+        : null;
+
+
+    const safeBrand =
+        escapeXML(
+            brand
+        );
+
+
+    let svg = "";
+
+
+
+    /* ========================================================
+       ICON ONLY
+    ======================================================== */
+
+    if (
+        layout === "icon-only"
+    ) {
+
+        svg = `
+
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            viewBox="0 0 500 500"
+            width="500"
+            height="500"
+        >
+
+            ${shapeMarkup(
+                shape,
+                secondary,
+                accent,
+                50,
+                50,
+                400,
+                400
+            )}
+
+
+            ${
+                icon
+                ? `
+
+                <image
+                    href="${icon}"
+                    x="${150 - ((scale - 1) * 50)}"
+                    y="${150 - ((scale - 1) * 50)}"
+                    width="${200 * scale}"
+                    height="${200 * scale}"
+                    preserveAspectRatio="xMidYMid meet"
+                />
+
+                `
+                : fallbackIconSVG(
+                    primary
+                )
+            }
+
+
+        </svg>
+
+        `;
+
+    }
+
+
+    /* ========================================================
+       ICON LEFT
+    ======================================================== */
+
+    else if (
+        layout === "icon-left"
+    ) {
+
+        const iconBox =
+            130;
+
+        const textX =
+            255;
+
+
+        svg = `
+
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            viewBox="0 0 500 500"
+            width="500"
+            height="500"
+        >
+
+            ${shapeMarkup(
+                shape,
+                secondary,
+                accent,
+                45,
+                185,
+                130,
+                130
+            )}
+
+
+            <g
+                transform="
+                    translate(45 185)
+                "
+            >
+
+                ${
+                    icon
+                    ? `
+
+                    <image
+                        href="${icon}"
+                        x="${15 - ((scale - 1) * 15)}"
+                        y="${15 - ((scale - 1) * 15)}"
+                        width="${100 * scale}"
+                        height="${100 * scale}"
+                        preserveAspectRatio="xMidYMid meet"
+                    />
+
+                    `
+                    : ""
+                }
+
+            </g>
+
+
+            <g>
+
+                <text
+                    x="${textX}"
+                    y="235"
+                    fill="${textColor}"
+                    font-family="${escapeXML(fontFamily)}"
+                    font-size="56"
+                    font-weight="${fontWeight}"
+                    letter-spacing="${letterSpacing}"
+                    dominant-baseline="middle"
+                >
+
+                    ${safeBrand}
+
+                </text>
+
+
+                ${
+                    design.tagline
+                    ? `
+
+                    <text
+                        x="${textX + 2}"
+                        y="285"
+                        fill="${textColor}"
+                        opacity=".55"
+                        font-family="${escapeXML(fontFamily)}"
+                        font-size="18"
+                        dominant-baseline="middle"
+                    >
+
+                        ${escapeXML(
+                            design.tagline
+                        )}
+
+                    </text>
+
+                    `
+                    : ""
+                }
+
+            </g>
+
+
+        </svg>
+
+        `;
+
+    }
+
+
+    /* ========================================================
+       ICON TOP
+    ======================================================== */
+
+    else {
+
+
+        const shapeX =
+            125;
+
+        const shapeY =
+            50;
+
+        const shapeSize =
+            250;
+
+
+        const iconSize =
+            120 * scale;
+
+
+        const iconX =
+            250 - iconSize / 2;
+
+
+        const iconY =
+            115;
+
+
+        svg = `
+
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            viewBox="0 0 500 500"
+            width="500"
+            height="500"
+        >
+
+            ${shapeMarkup(
+                shape,
+                secondary,
+                accent,
+                shapeX,
+                shapeY,
+                shapeSize,
+                shapeSize
+            )}
+
+
+            ${
+                icon
+                ? `
+
+                <image
+                    href="${icon}"
+                    x="${iconX}"
+                    y="${iconY}"
+                    width="${iconSize}"
+                    height="${iconSize}"
+                    preserveAspectRatio="xMidYMid meet"
+                />
+
+                `
+                : ""
+            }
+
+
+            <text
+                x="250"
+                y="370"
+                text-anchor="middle"
+                fill="${textColor}"
+                font-family="${escapeXML(fontFamily)}"
+                font-size="54"
+                font-weight="${fontWeight}"
+                letter-spacing="${letterSpacing}"
+            >
+
+                ${safeBrand}
+
+            </text>
+
+
+            ${
+                design.tagline
+                ? `
+
+                <text
+                    x="250"
+                    y="405"
+                    text-anchor="middle"
+                    fill="${textColor}"
+                    opacity=".55"
+                    font-family="${escapeXML(fontFamily)}"
+                    font-size="17"
+                >
+
+                    ${escapeXML(
+                        design.tagline
+                    )}
+
+                </text>
+
+                `
+                : ""
+            }
+
+
+        </svg>
+
+        `;
+
+    }
+
+
+    return svg;
+
+}
+
+
+/* ============================================================
+   SHAPES
+============================================================ */
+
+function shapeMarkup(
+    shape,
+    fill,
+    accent,
+    x,
+    y,
+    width,
+    height
+) {
+
+    if (
+        shape === "circle"
+    ) {
+
+        return `
+
+            <circle
+                cx="${x + width / 2}"
+                cy="${y + height / 2}"
+                r="${Math.min(width,height) / 2}"
+                fill="${fill}"
+            />
+
+        `;
+
+    }
+
+
+    if (
+        shape === "rounded-square"
+    ) {
+
+        return `
+
+            <rect
+                x="${x}"
+                y="${y}"
+                width="${width}"
+                height="${height}"
+                rx="${Math.min(width,height) * .18}"
+                fill="${fill}"
+            />
+
+        `;
+
+    }
+
+
+    if (
+        shape === "pill"
+    ) {
+
+        return `
+
+            <rect
+                x="${x}"
+                y="${y + height * .2}"
+                width="${width}"
+                height="${height * .6}"
+                rx="${height * .3}"
+                fill="${fill}"
+            />
+
+        `;
+
+    }
+
+
+    if (
+        shape === "hexagon"
+    ) {
+
+        const cx =
+            x + width / 2;
+
+        const cy =
+            y + height / 2;
+
+        const radius =
+            Math.min(
+                width,
+                height
+            ) / 2;
+
+
+        const points = [];
+
+
+        for (
+            let i = 0;
+            i < 6;
+            i++
+        ) {
+
+            const angle =
+                Math.PI / 3 * i
+                - Math.PI / 6;
+
+
+            points.push(
+
+                `${cx + radius * Math.cos(angle)},${cy + radius * Math.sin(angle)}`
+
+            );
+
+        }
+
+
+        return `
+
+            <polygon
+                points="${points.join(" ")}"
+                fill="${fill}"
+            />
+
+        `;
+
+    }
+
+
+    return "";
+
+}
+
+
+/* ============================================================
+   ICON SEARCH UI
+============================================================ */
+
+async function searchIcons() {
+
+    if (!currentDesign) {
+
+        return;
+
+    }
+
+
+    const input =
+        document.getElementById(
+            "iconSearch"
+        );
+
+
+    const query =
+        input.value.trim();
+
+
+    if (!query) {
+
+        return;
+
+    }
+
+
+    const status =
+        document.getElementById(
+            "iconSearchStatus"
+        );
+
+
+    status.innerText =
+        "아이콘 검색 중...";
+
+
+    const results =
+        await searchIconify(
+            query,
+            12
+        );
+
+
+    currentDesign.iconResults =
+        results;
+
+
+    status.innerText =
+        results.length
+        ? `${results.length}개 아이콘을 찾았어`
+        : "검색 결과가 없어.";
+
+
+    renderIconResults();
+
+}
+
+
+/* ============================================================
+   RENDER ICON RESULTS
+============================================================ */
+
+function renderIconResults() {
+
+    const container =
+        document.getElementById(
+            "iconResults"
+        );
+
+
+    container.innerHTML = "";
+
+
+    if (!currentDesign) {
+
+        return;
+
+    }
+
+
+    const results =
+        currentDesign.iconResults
+        || [];
+
+
+    results.forEach(
+        iconName => {
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+
+            button.className =
+                "icon-result";
+
+
+            button.title =
+                iconName;
+
+
+            const img =
+                document.createElement(
+                    "img"
+                );
+
+
+            img.src =
+                iconURL(
+                    iconName
+                );
+
+
+            img.loading =
+                "lazy";
+
+
+            const span =
+                document.createElement(
+                    "span"
+                );
+
+
+            span.innerText =
+                iconName;
+
+
+            button.appendChild(
+                img
+            );
+
+
+            button.appendChild(
+                span
+            );
+
+
+            button.onclick =
+                () => {
+
+                    setIcon(
+                        iconName
+                    );
+
+                };
+
+
+            container.appendChild(
+                button
+            );
+
+        }
+    );
+
+}
+
+
+/* ============================================================
+   SET ICON
+============================================================ */
+
+function setIcon(
+    iconName
+) {
+
+    if (!currentDesign) {
+
+        return;
+
+    }
+
+
+    currentDesign.iconName =
+        iconName;
+
+
+    renderMain();
+
+}
+
+
+/* ============================================================
+   SET LAYOUT
+============================================================ */
+
+function setLayout(
+    layout
+) {
+
+    if (!currentDesign) {
+
+        return;
+
+    }
+
+
+    currentDesign.layout =
+        layout;
+
+
+    renderMain();
+
+    updateControls();
+
+}
+
+
+/* ============================================================
+   COLOR
+============================================================ */
+
+function setColorTheme(
+    theme
+) {
+
+    if (!currentDesign) {
+
+        return;
+
+    }
+
+
+    const colors =
+        COLOR_THEMES[
+            theme
+        ];
+
+
+    if (!colors) {
+
+        return;
+
+    }
+
+
+    currentDesign.primaryColor =
+        colors.primary;
+
+
+    currentDesign.secondaryColor =
+        colors.secondary;
+
+
+    currentDesign.accentColor =
+        colors.accent;
+
+
+    currentDesign.textColor =
+        colors.text;
+
+
+    document
+        .getElementById(
+            "customColor"
+        )
+        .value =
+        colors.primary;
+
+
+    renderMain();
+
+    updateControls();
+
+}
+
+
+function setCustomColor(
+    color
+) {
+
+    if (!currentDesign) {
+
+        return;
+
+    }
+
+
+    currentDesign.primaryColor =
+        color;
+
+
+    currentDesign.accentColor =
+        color;
+
+
+    renderMain();
+
+    updateControls();
+
+}
+
+
+/* ============================================================
+   TYPOGRAPHY
+============================================================ */
+
+function setTypography(
+    font
+) {
+
+    if (!currentDesign) {
+
+        return;
+
+    }
+
+
+    if (!TYPOGRAPHY[font]) {
+
+        return;
+
+    }
+
+
+    currentDesign.fontStyle =
+        font;
+
+
+    currentDesign.fontFamily =
+        TYPOGRAPHY[
+            font
+        ].family;
+
+
+    currentDesign.fontWeight =
+        TYPOGRAPHY[
+            font
+        ].weight;
+
+
+    currentDesign.letterSpacing =
+        TYPOGRAPHY[
+            font
+        ].spacing;
+
+
+    renderMain();
+
+    updateControls();
+
+}
+
+
+/* ============================================================
+   FONT FAMILY
+============================================================ */
+
+function setFontFamily(
+    font
+) {
+
+    if (!currentDesign) {
+
+        return;
+
+    }
+
+
+    currentDesign.fontFamily =
+        font;
+
+
+    renderMain();
+
+}
+
+
+/* ============================================================
+   CONTROLS
+============================================================ */
+
+function updateControls() {
+
+    if (!currentDesign) {
+
+        return;
+
+    }
+
+
+    document
+        .querySelectorAll(
+            "[data-layout]"
+        )
+        .forEach(
+            element => {
+
+                element.classList.toggle(
+
+                    "active",
+
+                    element.dataset.layout
+                    === currentDesign.layout
+
+                );
+
+            }
+        );
+
+
+    document
+        .querySelectorAll(
+            "[data-font]"
+        )
+        .forEach(
+            element => {
+
+                element.classList.toggle(
+
+                    "active",
+
+                    element.dataset.font
+                    === currentDesign.fontStyle
+
+                );
+
+            }
+        );
+
+
+    const primary =
+        currentDesign.primaryColor
+            .toLowerCase();
+
+
+    document
+        .querySelectorAll(
+            "[data-color]"
+        )
+        .forEach(
+            element => {
+
+                const theme =
+                    COLOR_THEMES[
+                        element.dataset.color
+                    ];
+
+
+                element.classList.toggle(
+
+                    "active",
+
+                    theme &&
+                    theme.primary
+                        .toLowerCase()
+                    === primary
+
+                );
+
+            }
+        );
+
+
+    document
+        .getElementById(
+            "customColor"
+        )
+        .value =
+        validColor(
+            currentDesign.primaryColor,
+            "#6366f1"
+        );
+
+
+    const fontSelect =
+        document.getElementById(
+            "fontSelect"
+        );
+
+
+    if (
+        currentDesign.fontFamily
+    ) {
+
+        fontSelect.value =
+            currentDesign.fontFamily;
+
+    }
+
+}
+
+
+/* ============================================================
+   DOWNLOAD SVG
+============================================================ */
+
+function downloadSVG() {
+
+    if (!currentSVG) {
+
+        return;
+
+    }
+
+
+    let svg =
+        currentSVG;
+
+
+    if (
+        !svg.includes(
+            'xmlns="http://www.w3.org/2000/svg"'
+        )
+    ) {
+
+        svg =
+            svg.replace(
+                "<svg",
+                '<svg xmlns="http://www.w3.org/2000/svg"'
+            );
+
+    }
+
+
+    const blob =
+        new Blob(
+
+            [svg],
+
+            {
+                type:
+                    "image/svg+xml;charset=utf-8"
+            }
+
+        );
+
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const link =
+        document.createElement(
+            "a"
+        );
+
+
+    link.href =
+        url;
+
+
+    link.download =
+        `${safeFileName(brandName)}-logo.svg`;
+
+
+    document.body.appendChild(
+        link
+    );
+
+
+    link.click();
+
+    link.remove();
+
+
+    setTimeout(
+        () => {
+
+            URL.revokeObjectURL(
+                url
+            );
+
+        },
+        100
+    );
+
+}
+
+
+/* ============================================================
+   DOWNLOAD PNG
+============================================================ */
+
+function downloadPNG() {
+
+    if (!currentSVG) {
+
+        return;
+
+    }
+
+
+    const parser =
+        new DOMParser();
+
+
+    const svgDocument =
+        parser.parseFromString(
+            currentSVG,
+            "image/svg+xml"
+        );
+
+
+    const svgElement =
+        svgDocument.documentElement;
+
+
+    const serializer =
+        new XMLSerializer();
+
+
+    const svgText =
+        serializer.serializeToString(
+            svgElement
+        );
+
+
+    const blob =
+        new Blob(
+
+            [svgText],
+
+            {
+                type:
+                    "image/svg+xml;charset=utf-8"
+            }
+
+        );
+
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const image =
+        new Image();
+
+
+    image.crossOrigin =
+        "anonymous";
+
+
+    image.onload =
+        function() {
+
+            const canvas =
+                document.createElement(
+                    "canvas"
+                );
+
+
+            canvas.width =
+                2048;
+
+            canvas.height =
+                2048;
+
+
+            const ctx =
+                canvas.getContext(
+                    "2d"
+                );
+
+
+            ctx.clearRect(
+                0,
+                0,
+                2048,
+                2048
+            );
+
+
+            ctx.drawImage(
+                image,
+                0,
+                0,
+                2048,
+                2048
+            );
+
+
+            canvas.toBlob(
+                blob => {
+
+                    if (!blob) {
+
+                        alert(
+                            "PNG 변환에 실패했어."
+                        );
+
+                        return;
+
+                    }
+
+
+                    const pngURL =
+                        URL.createObjectURL(
+                            blob
+                        );
+
+
+                    const link =
+                        document.createElement(
+                            "a"
+                        );
+
+
+                    link.href =
+                        pngURL;
+
+
+                    link.download =
+                        `${safeFileName(brandName)}-logo.png`;
+
+
+                    document.body.appendChild(
+                        link
+                    );
+
+
+                    link.click();
+
+
+                    link.remove();
+
+
+                    setTimeout(
+                        () => {
+
+                            URL.revokeObjectURL(
+                                pngURL
+                            );
+
+                        },
+                        100
+                    );
+
+                },
+
+                "image/png"
+            );
+
+
+            URL.revokeObjectURL(
+                url
+            );
+
+        };
+
+
+    image.onerror =
+        function() {
+
+            URL.revokeObjectURL(
+                url
+            );
+
+
+            alert(
+                "PNG 변환에 실패했어. 아이콘 외부 리소스가 차단됐을 가능성이 있어."
+            );
+
+        };
+
+
+    image.src =
+        url;
+
+}
+
+
+/* ============================================================
+   UTILITIES
+============================================================ */
+
+function validColor(
+    color,
+    fallback
+) {
+
+    if (
+        typeof color !== "string"
+    ) {
+
+        return fallback;
+
+    }
+
+
+    return /^#[0-9A-Fa-f]{6}$/
+        .test(color)
+        ? color
+        : fallback;
+
+}
+
+
+function validDirection(
+    value,
+    fallback
+) {
+
+    const allowed = [
+
+        "Minimal",
+        "Symbolic",
+        "Monogram",
+        "Emblem"
+
+    ];
+
+
+    return allowed.includes(
+        value
+    )
+        ? value
+        : fallback;
+
+}
+
+
+function validLayout(
+    value,
+    fallback
+) {
+
+    const allowed = [
+
+        "icon-top",
+        "icon-left",
+        "icon-only"
+
+    ];
+
+
+    return allowed.includes(
+        value
+    )
+        ? value
+        : fallback;
+
+}
+
+
+function validShape(
+    value,
+    fallback
+) {
+
+    const allowed = [
+
+        "none",
+        "circle",
+        "rounded-square",
+        "hexagon",
+        "pill"
+
+    ];
+
+
+    return allowed.includes(
+        value
+    )
+        ? value
+        : fallback;
+
+}
+
+
+function validFont(
+    value,
+    fallback
+) {
+
+    return TYPOGRAPHY[value]
+        ? value
+        : fallback;
+
+}
+
+
+function clamp(
+    value,
+    min,
+    max
+) {
+
+    return Math.max(
+        min,
+        Math.min(
+            max,
+            value
+        )
+    );
+
+}
+
+
+function escapeXML(
+    value
+) {
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&apos;"
+        );
+
+}
+
+
+function escapeHTML(
+    value
+) {
+
+    return escapeXML(
+        value
+    );
+
+}
+
+
+function deepClone(
+    object
+) {
+
+    return JSON.parse(
+        JSON.stringify(
+            object
+        )
+    );
+
+}
+
+
+function safeFileName(
+    value
+) {
+
+    return String(
+        value || "ai"
+    )
+
+        .replace(
+            /[^a-zA-Z0-9가-힣_-]/g,
+            "_"
+        );
+
+}
+
+
+function setStatus(
+    message
+) {
+
+    document
+        .getElementById(
+            "status"
+        )
+        .innerText =
+        message;
+
+}
+
+</script>
+
+</body>
+
+</html>
