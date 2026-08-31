@@ -1,0 +1,11 @@
+build:
+
+nasm -f bin boot.asm -o boot.bin
+
+check:
+
+dir boot.bin
+
+and, of course:
+
+512 bytes
