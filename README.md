@@ -23,13 +23,6 @@ and optimizing them under real constraints.
 | [3. Mathematics](#3-mathematics) | computational logic & algorithms | `THINKING` |
 | [4. Idea Notes](#4-idea-notes) | experiments, prototypes & unfinished ideas | `EXPERIMENTING` |
 
-### 📝 Beyond the Repository
-For more raw notes and experiments,
-I recommend checking out [my blog](https://ulsidae.github.io/ulsidae/docs/blog).
-
-> `dev_logs` keeps the polished version.
-> The blog keeps the messy one.
-
 ---
 
 <h2 id="0-security-crypto">🔐 0. Security & Crypto</h2>
